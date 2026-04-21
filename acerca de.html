@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acerca de - Biblioteca Pública de Ibros</title>
+
+<style>
+:root {
+    --bg: #ffffff;
+    --text: #222;
+    --border: #ddd;
+    --input-bg: #f5f5f5;
+    --accent: #2e7d32; /* Verde corporativo */
+}
+
+/* ESTILOS MODO OSCURO */
+[data-theme="dark"] {
+    --bg: #1a1a1a;
+    --text: #eee;
+    --border: #444;
+    --input-bg: #2a2a2a;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+}
+
+.card {
+    width: 90%;
+    max-width: 650px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.logo-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.logo-group img {
+    height: 70px;
+    width: auto;
+    /* Filtro opcional para que los logos se vean mejor en modo oscuro si no son transparentes */
+}
+
+h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 17px;
+    text-align: justify;
+}
+
+.highlight {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.creator-info {
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--input-bg);
+    border-radius: 15px;
+}
+
+.creator-info span {
+    display: block;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    opacity: 0.7;
+}
+
+.creator-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn-back {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.btn-back:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste de color para el título en modo oscuro */
+[data-theme="dark"] h1 {
+    color: #4caf50;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <div class="logo-group">
+        <img src="escudo-ibros.png" alt="Escudo de Ibros">
+        <img src="logo-junta.png" alt="Junta de Andalucía">
+        <img src="logo-vuela.png" alt="Punto Vuela">
+    </div>
+
+    <h1>Sobre este Proyecto</h1>
+
+    <p>
+        Este sistema de consulta digital es el registro oficial de la 
+        <span class="highlight">Biblioteca Pública de Ibros</span>. Ha sido diseñado para modernizar 
+        la gestión del catálogo y facilitar a los vecinos la búsqueda de sus libros favoritos de forma rápida y sencilla.
+    </p>
+
+    <p>
+        Este proyecto ha sido posible gracias a la colaboración de la <span class="highlight">Junta de Andalucía</span> 
+        y el soporte técnico del <span class="highlight">Punto Vuela de Ibros</span>, un centro comprometido 
+        con el cierre de la brecha digital y el impulso tecnológico de nuestro municipio.
+    </p>
+
+    <div class="creator-info">
+        <span>Diseño y Desarrollo</span>
+        <div class="creator-name">José Romero Cortés</div>
+    </div>
+
+    <a href="index.html" class="btn-back">← Volver al Registro</a>
+</div>
+
+<script>
+    // FUNCIÓN PARA SINCRONIZAR EL MODO OSCURO
+    function aplicarTema() {
+        // Lee la "nota" que dejó la página principal en el navegador
+        const temaGuardado = localStorage.getItem('tema-biblioteca');
+        
+        if (temaGuardado === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    }
+
+    // Se ejecuta nada más cargar la página
+    aplicarTema();
+
+    // Por si el usuario cambia el tema en otra pestaña abierta
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'tema-biblioteca') {
+            aplicarTema();
+        }
+    });
+</script>
+
+</body>
+</html>
