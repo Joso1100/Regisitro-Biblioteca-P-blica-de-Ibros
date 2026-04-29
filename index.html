@@ -6,6 +6,8 @@
 <link rel="icon" type="image/png" href="gemini190px.png">
 <link rel="icon" type="image/png" sizes="512x512" href="gemini512px.png">
 <link rel="apple-touch-icon" href="gemini512px.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#444444">
 <title>Registro Biblioteca Pública de Ibros</title>
 
 <style>
@@ -704,6 +706,15 @@ chatInput.onkeypress = (e) => {
 };
 
 init();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('Service Worker registrado correctamente.', reg))
+        .catch(err => console.error('Error al registrar el Service Worker:', err));
+    });
+  }
 </script>
 </body>
 </html>
