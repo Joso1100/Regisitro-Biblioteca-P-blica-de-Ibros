@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Descargar App - Biblioteca Pública de Ibros</title>
+
+<style>
+:root {
+  --bg: #fff;
+  --text: #222;
+  --border: #ddd;
+  --input-bg: #f5f5f5;
+  --sidebar: #f0f0f0;
+  --accent: #2e7d32; 
+}
+[data-theme="dark"] {
+  --bg: #1a1a1a;
+  --text: #eee;
+  --border: #444;
+  --input-bg: #2a2a2a;
+  --sidebar: #2d2d2d;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* SIDEBAR PERSISTENTE */
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  background: var(--sidebar);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  z-index: 100;
+}
+
+.sidebar-content {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#menu-lateral {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-link {
+  display: block;
+  padding: 8px 10px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+.menu-link:hover {
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
+/* MAIN AREA */
+.main {
+  margin-left: 280px; 
+  padding: 40px 20px;
+  width: calc(100% - 280px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* BOTÓN MODO OSCURO */
+.btn-oscuro {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+/* TARJETA DESCARGAS */
+.card {
+    width: 100%;
+    max-width: 650px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    margin-top: 40px;
+}
+
+h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+p {
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: var(--text);
+    opacity: 0.9;
+}
+
+/* BOTONES DE DESCARGA */
+.download-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 18px 25px;
+    background: var(--input-bg);
+    color: var(--text);
+    text-decoration: none;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.download-btn span.icon {
+    font-size: 24px;
+}
+
+.download-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 2px solid var(--border);
+  }
+  #menu-lateral {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 60px 15px 20px 15px;
+  }
+  .card { padding: 25px; margin-top: 20px; }
+  h1 { font-size: 22px; }
+  .download-btn {
+    font-size: 16px;
+    padding: 15px 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-content">
+      <img src="escudo.png" style="width:90px; margin: 10px auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
+      
+      <nav id="menu-lateral">
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/index.html" class="menu-link">Inicio</a>
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/acerca%20de.html" class="menu-link">Acerca de</a>
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/descargar%20app.html#" class="menu-link">Descargar App</a>
+      </nav>
+  </div>
+</div>
+
+<div class="main">
+  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
+
+  <div class="card">
+    <h1>Lleva la Biblioteca contigo</h1>
+    
+    <p>
+        Accede a todo nuestro catálogo, realiza reservas y consulta el estado de tus préstamos directamente desde tu dispositivo favorito. 
+        Elige tu plataforma para descargar la aplicación.
+    </p>
+
+    <div class="download-container">
+        <a href="#" class="download-btn">
+            <span class="icon">🤖</span>
+            Descargar para Android
+        </a>
+
+        <a href="#" class="download-btn">
+            <span class="icon">🍏</span>
+            Descargar para iOS
+        </a>
+
+        <a href="#" class="download-btn">
+            <span class="icon">💻</span>
+            Descargar para PC
+        </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// --- LÓGICA DE TEMA (Sincronizada con el resto de la web) ---
+function toggleTema() {
+    const html = document.documentElement;
+    const btn = document.getElementById("btn-tema");
+    
+    if (html.getAttribute("data-theme") === "dark") {
+        html.removeAttribute("data-theme");
+        localStorage.setItem("tema", "light");
+        btn.innerText = "Modo Oscuro";
+    } else {
+        html.setAttribute("data-theme", "dark");
+        localStorage.setItem("tema", "dark");
+        btn.innerText = "Modo Claro";
+    }
+}
+
+function aplicarTemaAlCargar() {
+    const temaGuardado = localStorage.getItem("tema");
+    if (temaGuardado === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.getElementById("btn-tema").innerText = "Modo Claro";
+    }
+}
+
+aplicarTemaAlCargar();
+
+// Escucha por si cambias el tema en otra pestaña
+window.addEventListener('storage', (e) => {
+    if (e.key === 'tema') {
+        location.reload(); 
+    }
+});
+</script>
+
+</body>
+</html>
