@@ -1,8 +1,12 @@
 const CACHE_NAME = 'biblioteca-v1';
 const assets = [
-  '/',
-  '/index.html',
-  // Añade aquí tus archivos CSS o JS locales si los tienes
+  './',
+  './index.html',
+  './acerca de.html',
+  './descargar app.html',
+  './gemini190px.png',
+  './gemini512px.png',
+  './manifest.json'
 ];
 
 self.addEventListener('install', event => {
