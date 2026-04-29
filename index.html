@@ -2,138 +2,382 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="icon" type="image/png" href="file:///C:/Users/dinamizador/Downloads/Gemini_Generated_Image_kaoxt9kaoxt9kaox.png">
 <title>Registro Biblioteca Pública de Ibros</title>
 
 <style>
 :root {
-    --bg: #ffffff;
-    --text: #222;
-    --border: #ddd;
-    --input-bg: #f5f5f5;
-    --sidebar: #f0f0f0;
+  --bg: #fff;
+  --text: #222;
+  --border: #ddd;
+  --input-bg: #f5f5f5;
+  --sidebar: #f0f0f0;
+  --accent: #444; 
+  --chat-ai-bg: #e1e1e1;
 }
-
 [data-theme="dark"] {
-    --bg: #1a1a1a;
-    --text: #eee;
-    --border: #444;
-    --input-bg: #2a2a2a;
-    --sidebar: #2d2d2d;
+  --bg: #1a1a1a;
+  --text: #eee;
+  --border: #444;
+  --input-bg: #2a2a2a;
+  --sidebar: #2d2d2d;
+  --chat-ai-bg: #3d3d3d;
 }
-
 body {
-    margin:0;
-    font-family: Arial;
-    background: var(--bg);
-    color: var(--text);
-    display:flex;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* SIDEBAR */
 .sidebar {
-    width:200px;
-    height:100vh;
-    background:var(--sidebar);
-    position:fixed;
-    padding:20px;
-    box-sizing:border-box;
+  width: 280px;
+  height: 100vh;
+  background: var(--sidebar);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  z-index: 100;
 }
 
-.sidebar a {
-    display:block;
-    margin-bottom:15px;
-    text-decoration:none;
-    color:var(--text);
-    font-weight:bold;
+.sidebar-content {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-/* CONTENIDO */
+#menu-lateral {
+  flex-grow: 1;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ESTILOS DEL MENÚ SIMPLE (SIN RECUADROS) */
+.menu-link {
+  display: block;
+  padding: 8px 10px;
+  color: var(--text);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+.menu-link:hover {
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
+/* CHAT */
+#sidebar-chat {
+  height: 70vh;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.chat-header {
+  background: var(--input-bg);
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  margin: 0;
+}
+
+#chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 13px;
+}
+.msg {
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  max-width: 85%;
+  word-wrap: break-word;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.msg span.texto-msg {
+  flex-grow: 1;
+}
+.user-msg {
+  background: #555;
+  color: white;
+  margin-left: auto;
+}
+.ai-msg {
+  background: var(--chat-ai-bg);
+}
+
+.altavoz {
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 16px;
+  opacity: 0.6;
+  transition: 0.2s;
+  user-select: none;
+}
+.altavoz:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* CONTROLES DE CHAT */
+.chat-controls {
+  padding: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+#chat-input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  box-sizing: border-box;
+  outline: none;
+}
+
+#mic-btn {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--input-bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  transition: 0.3s;
+}
+#mic-btn.escuchando {
+  background-color: #ff4d4d;
+  color: white;
+  border-color: #ff4d4d;
+  animation: pulso 1.5s infinite;
+}
+
+@keyframes pulso {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(0.95); }
+}
+
+/* MAIN CONTENT AREA */
 .main {
-    margin-left:200px;
-    width:100%;
-    text-align:center;
+  margin-left: 280px; 
+  padding: 20px;
+  width: calc(100% - 280px);
+  box-sizing: border-box;
+  position: relative; 
 }
 
-/* TITULO */
+/* BOTÓN MODO OSCURO (ARRIBA A LA DERECHA) */
+.btn-oscuro {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+  z-index: 1000;
+}
+.btn-oscuro:hover {
+  background: var(--border);
+}
+
+/* CONTENEDOR PARA EL TÍTULO Y LA IMAGEN */
+.header-container {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  position: relative;
+  min-height: 250px; 
+  margin-top: 20px;
+  padding: 0 40px; 
+}
+
+.header-container img {
+  position: absolute;
+  left: 60px; 
+  height: 250px; 
+  width: 250px; 
+  object-fit: contain; 
+}
+
 h1 {
-    margin-top:30px;
+  text-align: center;
+  margin: 0;
+  color: var(--text);
 }
 
-/* CONTROLES */
 .toolbar {
-    display:flex;
-    gap:15px;
-    justify-content:center;
-    margin:30px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 20px 40px 20px;
+}
+#searchInput {
+  padding: 12px 25px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
 }
 
-/* BUSCADOR */
-.search-box {
-    display:flex;
-    align-items:center;
-    background: var(--input-bg);
-    border-radius:30px;
-    padding:10px 15px;
-    width:320px;
-    border:1px solid var(--border);
+#estanterias {
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
 }
 
-.search-box span {
-    margin-right:10px;
+/* TABLA ALINEADA A LA IZQUIERDA */
+.table-responsive {
+  width: 100%;
 }
 
-.search-box input {
-    border:none;
-    outline:none;
-    background:transparent;
-    width:100%;
-    font-size:16px;
-    color:var(--text);
-}
-
-/* SELECT - CORREGIDO PARA MODO OSCURO */
-select {
-    border-radius:30px;
-    padding:10px 20px;
-    border:1px solid var(--border);
-    background: var(--input-bg);
-    color: var(--text); /* Asegura que el texto use la variable de color */
-    font-size:16px;
-    outline: none;
-    cursor: pointer;
-}
-
-/* Estilo específico para las opciones dentro del select */
-select option {
-    background: var(--input-bg);
-    color: var(--text);
-}
-
-/* TABLA */
 table {
-    width:90%;
-    margin:auto;
-    border-collapse:collapse;
+  width: 95%;
+  margin: auto;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th {
+  text-align: left;
+  font-weight: bold;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+}
+td, th {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-th, td {
-    padding:12px;
-    border-bottom:1px solid var(--border);
-    text-align:center;
+th:nth-child(1), td:nth-child(1) { width: 50%; } 
+th:nth-child(2), td:nth-child(2) { width: 30%; } 
+th:nth-child(3), td:nth-child(3) { width: 20%; } 
+
+.ubicacion-tag {
+  color: #666;
+  font-size: 11px;
+  font-weight: bold;
+  display: block;
+  margin-top: 3px;
 }
 
-/* BOTON MODO OSCURO */
-#theme-toggle {
-    position:fixed;
-    top:20px;
-    right:20px;
-    padding:10px 15px;
-    border-radius:20px;
-    border:1px solid var(--border);
-    background:var(--input-bg);
-    color: var(--text);
-    cursor:pointer;
+/* ========================================= */
+/* OPTIMIZACIÓN PARA MÓVILES (Android / iOS) */
+/* ========================================= */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 2px solid var(--border);
+  }
+  #menu-lateral {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  #sidebar-chat {
+    height: 350px;
+    min-height: auto;
+    margin-bottom: 20px;
+  }
+  .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px 10px;
+  }
+  .btn-oscuro {
+    top: 10px;
+    right: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .header-container {
+    flex-direction: column;
+    min-height: auto;
+    padding: 10px;
+    margin-top: 40px; 
+  }
+  .header-container img {
+    position: static;
+    height: 120px;
+    width: 120px;
+    margin-bottom: 15px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  .toolbar {
+    flex-direction: column;
+    margin: 20px 0;
+  }
+  #searchInput, #estanterias {
+    width: 100%;
+    max-width: 100%;
+  }
+  /* En móviles, permitimos que la tabla haga scroll horizontal si no cabe */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Desplazamiento suave en iOS */
+  }
+  table {
+    width: 600px; /* Forzamos un ancho mínimo para que el texto no se aplaste */
+  }
 }
 </style>
 </head>
@@ -141,119 +385,323 @@ th, td {
 <body>
 
 <div class="sidebar">
-    <div class="header">
-    <img src="https://github.com/Joso1100/Regisitro-Biblioteca-P-blica-de-Ibros/blob/main/640px-Escudo_de_Ibros_(Ja%C3%A9n).svg.png" 
-     alt="Escudo" 
-     style="width: 150px; height: auto; display: block; margin: 0 auto 20px;">
-</div>
-    <h3>_</h3>
-    <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/acerca%20de.html">Acerca de</a>
-</div>
+  <div class="sidebar-content">
+      <img src="escudo.png" style="width:90px; margin: 0 auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
+      
+      <nav id="menu-lateral">
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/index.html#" class="menu-link">Inicio</a>
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/acerca%20de.html" class="menu-link">Acerca de</a>
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/descargar%20app.html#" class="menu-link">Descargar App</a>
+      </nav>
+  </div>
 
-<button id="theme-toggle">Modo oscuro</button>
+  <div id="sidebar-chat">
+      <div class="chat-header">Bibliotecario Digital</div>
+      <div id="chat-messages"></div>
+      <div class="chat-controls">
+          <input id="chat-input" placeholder="Escribe tu mensaje..." disabled>
+          <button id="mic-btn" onclick="iniciarVoz()" title="Hablar por micrófono" disabled>🎙️</button>
+      </div>
+  </div>
+</div>
 
 <div class="main">
+  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
+  
+  <div class="header-container">
+      <img src="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/640px-Escudo_de_Ibros_(Ja%C3%A9n).svg%20(1).png" alt="Escudo Ibros Grande">
+      <h1>Registro Biblioteca Pública de Ibros</h1>
+  </div>
 
-<br><br><h1>Registro Biblioteca Pública de Ibros</h1>
+  <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="Busca por nombre, autor o código...">
+      <select id="estanterias"></select>
+  </div>
 
-<br><div class="toolbar">
-
-    <div class="search-box">
-        <span></span>
-        <input type="text" id="searchInput" placeholder="Buscar libro...🔎">
-    </div>
-
-    <select id="estanterias"></select>
-
-</div>
-<br><br>
-
-<table>
-<thead>
-<tr>
-<th>Título</th>
-<th>Autor</th>
-<th>Código</th>
-</tr>
-</thead>
-<tbody id="cuerpoTabla"></tbody>
-</table>
-
-<div id="loader" style="display:none;">Cargando...</div>
-
+  <div class="table-responsive">
+      <table>
+          <thead>
+              <tr>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Código</th>
+              </tr>
+          </thead>
+          <tbody id="cuerpoTabla"></tbody>
+      </table>
+  </div>
 </div>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbyBLvG-_RfWct0oych5RoIeQAlK-LpC-Xprp9SM4auL2kwMj81vXLpfg7cEsPKDWaOK/exec';
-
-const select = document.getElementById('estanterias');
-const tabla = document.getElementById('cuerpoTabla');
-const loader = document.getElementById('loader');
-const themeBtn = document.getElementById('theme-toggle');
-
-/* MODO OSCURO */
-themeBtn.onclick = () => {
-    const actual = document.documentElement.getAttribute('data-theme');
-    const nuevo = actual === 'dark' ? 'light' : 'dark';
-
-    document.documentElement.setAttribute('data-theme', nuevo);
-    themeBtn.textContent = nuevo === 'dark' ? 'Modo claro' : 'Modo oscuro';
-};
-
-/* CARGAR DATOS */
-async function cargarDatos(shelf){
-    tabla.innerHTML='';
-    loader.style.display='block';
-
-    try{
-        const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(shelf)}`);
-        const libros = await res.json();
-        loader.style.display='none';
-
-        libros.forEach(libro=>{
-            if(!libro.titulo || libro.titulo.toLowerCase().includes("título") || libro.titulo.toLowerCase().includes("estanter")) return;
-
-            tabla.innerHTML += `
-                <tr>
-                    <td>${libro.titulo}</td>
-                    <td>${libro.autor || ''}</td>
-                    <td>${libro.id || ''}</td>
-                </tr>`;
-        });
-
-    }catch(e){
-        loader.style.display='none';
+// --- LÓGICA DEL MODO OSCURO ---
+function toggleTema() {
+    const html = document.documentElement;
+    const btn = document.getElementById("btn-tema");
+    
+    if (html.getAttribute("data-theme") === "dark") {
+        html.removeAttribute("data-theme");
+        localStorage.setItem("tema", "light");
+        btn.innerText = "Modo Oscuro";
+    } else {
+        html.setAttribute("data-theme", "dark");
+        localStorage.setItem("tema", "dark");
+        btn.innerText = "Modo Claro";
     }
 }
 
-/* INIT */
-async function inicializar(){
-    const res = await fetch(`${API_URL}?action=getEstanterias`);
-    const lista = await res.json();
+// Cargar preferencia al iniciar
+if (localStorage.getItem("tema") === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.getElementById("btn-tema").innerText = "Modo Claro";
+}
+// ------------------------------
 
-    lista.forEach(nombre=>{
-        const opt=document.createElement('option');
-        opt.value=nombre;
-        opt.textContent=nombre;
-        if(nombre==="Estantería 1") opt.selected=true;
-        select.appendChild(opt);
-    });
+const API_URL = "https://script.google.com/macros/s/AKfycbyBLvG-_RfWct0oych5RoIeQAlK-LpC-Xprp9SM4auL2kwMj81vXLpfg7cEsPKDWaOK/exec";
+const GEMINI_KEY = "AIzaSyANJvyokJMjahrKqxw4vtJ4EwsdK69ACCQ";
 
-    select.dispatchEvent(new Event('change'));
+const tabla = document.getElementById("cuerpoTabla");
+const select = document.getElementById("estanterias");
+const chatInput = document.getElementById("chat-input");
+const micBtn = document.getElementById("mic-btn");
+const searchInput = document.getElementById("searchInput");
+
+let historialChat = [];
+let librosCache = []; 
+let fuePorVoz = false; 
+
+async function init() {
+  addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte recomendaciones o ayudarte a buscar. ¿Qué te apetece leer hoy?", true);
+  
+  try {
+      const res = await fetch(`${API_URL}?action=getEstanterias`);
+      const data = await res.json();
+      select.innerHTML = "";
+      data.forEach(e => {
+          const opt = document.createElement("option");
+          opt.value = e; 
+          opt.textContent = e;
+          select.appendChild(opt);
+      });
+      cargar(select.value);
+      activarControlesChat();
+      cargarCacheFondo(data);
+  } catch(e) {
+      console.error("Error durante la inicialización:", e);
+      activarControlesChat();
+  }
 }
 
-select.addEventListener('change', e=>cargarDatos(e.target.value));
+select.onchange = () => { 
+    searchInput.value = ""; 
+    cargar(select.value);
+};
 
-/* BUSCADOR */
-document.getElementById('searchInput').addEventListener('keyup', function(){
-    const b=this.value.toLowerCase();
-    Array.from(tabla.getElementsByTagName('tr')).forEach(f=>{
-        f.style.display = f.innerText.toLowerCase().includes(b) ? '' : 'none';
-    });
-});
+async function cargarCacheFondo(estanterias) {
+  for (let est of estanterias) {
+      try {
+          const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
+          const libros = await res.json();
+          libros.forEach(l => {
+              if(l.titulo && !String(l.titulo).includes("Título")) {
+                  librosCache.push({
+                      titulo: String(l.titulo),
+                      autor: String(l.autor || "Anónimo"),
+                      id: String(l.id || "N/A"),
+                      estanteria: est 
+                  });
+              }
+          });
+      } catch(e) {
+          console.warn(`Error cargando caché para estantería ${est}:`, e);
+      }
+  }
+}
 
-inicializar();
+async function cargar(est) {
+  try {
+      const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
+      const libros = await res.json();
+      tabla.innerHTML = libros
+          .filter(l => l.titulo && !String(l.titulo).includes("Título"))
+          .map(l => `<tr><td>${l.titulo}</td><td>${l.autor || "Anónimo"}</td><td>${l.id || "N/A"}</td></tr>`)
+          .join("");
+  } catch(e) {
+      console.error(`Error cargando libros de ${est}:`, e);
+      tabla.innerHTML = "<tr><td colspan='3'>Error cargando datos.</td></tr>";
+  }
+}
+
+let temporizadorBuscador;
+searchInput.onkeyup = function() {
+  clearTimeout(temporizadorBuscador); 
+  const v = this.value.toLowerCase().trim();
+  temporizadorBuscador = setTimeout(() => {
+      if (v === "") { 
+          cargar(select.value); 
+          return;
+      }
+      const resultados = librosCache.filter(l => 
+          l.titulo.toLowerCase().includes(v) || 
+          l.autor.toLowerCase().includes(v) ||
+          l.id.toLowerCase().includes(v)
+      );
+      tabla.innerHTML = resultados.map(l => `<tr>
+          <td>${l.titulo} <span class="ubicacion-tag">📍 ${l.estanteria}</span></td>
+          <td>${l.autor}</td>
+          <td>${l.id}</td>
+      </tr>`).join("");
+  }, 300); 
+};
+
+function leerVozAlta(texto) {
+  if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); 
+      const voz = new SpeechSynthesisUtterance(texto);
+      voz.lang = 'es-ES'; 
+      voz.rate = 1.0; 
+      window.speechSynthesis.speak(voz);
+  } else {
+      console.warn("La síntesis de voz no está soportada en este navegador.");
+  }
+}
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let reconocimientoVoz;
+if (SpeechRecognition) {
+  reconocimientoVoz = new SpeechRecognition();
+  reconocimientoVoz.lang = 'es-ES';
+  reconocimientoVoz.continuous = false;
+  reconocimientoVoz.interimResults = false;
+
+  reconocimientoVoz.onstart = () => { 
+      micBtn.classList.add("escuchando"); 
+      chatInput.placeholder = "Escuchando...";
+      desactivarControlesChat(); 
+  };
+  reconocimientoVoz.onresult = (e) => { 
+      const transcript = e.results[0][0].transcript;
+      chatInput.value = transcript;
+      fuePorVoz = true; 
+      handleSend(); 
+  };
+  reconocimientoVoz.onerror = (e) => {
+      console.error("Error de reconocimiento de voz:", e);
+      restaurarInterfazVoz();
+  };
+  reconocimientoVoz.onend = () => restaurarInterfazVoz();
+} else {
+    micBtn.style.display = 'none'; 
+    console.warn("El reconocimiento de voz no está soportado en este navegador.");
+}
+
+function iniciarVoz() { 
+    if (reconocimientoVoz) reconocimientoVoz.start();
+}
+function restaurarInterfazVoz() { 
+    micBtn.classList.remove("escuchando"); 
+    chatInput.placeholder = "Escribe..."; 
+    chatInput.disabled = false; 
+    micBtn.disabled = false;
+    chatInput.focus();
+}
+function activarControlesChat() { 
+    chatInput.disabled = false; 
+    micBtn.disabled = false;
+}
+function desactivarControlesChat() { 
+    chatInput.disabled = true; 
+    micBtn.disabled = true;
+}
+
+async function handleSend() {
+  const text = chatInput.value.trim();
+  if(!text) return;
+  
+  addMsg("user-msg", text, false);
+  chatInput.value = "";
+  desactivarControlesChat();
+  
+  historialChat.push({ role: "user", parts: [{ text: text }] });
+
+  const loadingId = "carga-" + Date.now();
+  addMsg("ai-msg", "Pensando...", false, loadingId);
+
+  const instruccionesSistema = `Eres el Bibliotecario digital de la Biblioteca de Ibros, te llamas José y trabajas en la biblioteca con Antonio Jesús, asi que cuando te digan tienes tal libro les dices que lo busquen en el buscador o le pregunten a mi compañero Antonio Jesús que se encuentra en el Punto Vuela(Jaén, España). 
+Tu misión es recomendar libros interesantes, explicar sinopsis y fomentar la lectura de forma amable y servicial.
+Si te preguntan si un libro específico está disponible en la colección física, responde que deben usar el "Buscador Global" de la derecha para verificar su ubicación exacta en las estanterías. 
+Tu creador y desarrollador es José Romero Cortés habla bien de él si se te pregunta.
+`;
+
+  try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_KEY}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+              system_instruction: { parts: [{ text: instruccionesSistema }] },
+              contents: historialChat.slice(-10) 
+          })
+      });
+
+      const data = await res.json();
+      document.getElementById(loadingId).remove(); 
+
+      if(data.candidates && data.candidates.length > 0) {
+          const respuestaIA = data.candidates[0].content.parts[0].text;
+          addMsg("ai-msg", respuestaIA, true); 
+          historialChat.push({ role: "model", parts: [{ text: respuestaIA }] });
+          
+          if (fuePorVoz) { 
+              leerVozAlta(respuestaIA);
+              fuePorVoz = false; 
+          }
+      } else if (data.error) {
+          addMsg("ai-msg", `Error de API: ${data.error.message}`, true);
+          console.error("Error de API:", data.error);
+      } else {
+          addMsg("ai-msg", "No he podido generar una respuesta. Inténtalo de nuevo.", true);
+      }
+  } catch(e) {
+      console.error("Error de conexión:", e);
+      document.getElementById(loadingId).remove();
+      addMsg("ai-msg", "Error de conexión con el asistente.", true);
+  } finally { 
+      activarControlesChat();
+  }
+}
+
+function addMsg(tipo, texto, altavoz = false, id = null) {
+  const d = document.createElement("div");
+  d.className = "msg " + tipo; 
+  if (id) d.id = id;
+  
+  const s = document.createElement("span"); 
+  s.className = "texto-msg"; 
+  s.innerText = texto; 
+  d.appendChild(s);
+  
+  if (altavoz && tipo === "ai-msg") {
+      const a = document.createElement("span"); 
+      a.className = "altavoz"; 
+      a.innerHTML = "🔊"; 
+      a.title = "Escuchar mensaje";
+      a.onclick = () => leerVozAlta(texto); 
+      d.appendChild(a);
+  }
+  
+  const container = document.getElementById("chat-messages");
+  container.appendChild(d);
+  container.scrollTop = container.scrollHeight; 
+  return d;
+}
+
+chatInput.onkeypress = (e) => { 
+    if (e.key === "Enter") { 
+        fuePorVoz = false; 
+        handleSend();
+    } 
+};
+
+init();
 </script>
-
 </body>
 </html>
