@@ -2,40 +2,106 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Acerca de - Biblioteca Pública de Ibros</title>
 
 <style>
 :root {
-    --bg: #ffffff;
-    --text: #222;
-    --border: #ddd;
-    --input-bg: #f5f5f5;
-    --accent: #2e7d32; /* Verde corporativo */
+  --bg: #fff;
+  --text: #222;
+  --border: #ddd;
+  --input-bg: #f5f5f5;
+  --sidebar: #f0f0f0;
+  --accent: #2e7d32; 
 }
-
-/* ESTILOS MODO OSCURO */
 [data-theme="dark"] {
-    --bg: #1a1a1a;
-    --text: #eee;
-    --border: #444;
-    --input-bg: #2a2a2a;
+  --bg: #1a1a1a;
+  --text: #eee;
+  --border: #444;
+  --input-bg: #2a2a2a;
+  --sidebar: #2d2d2d;
 }
-
 body {
-    margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    transition: background 0.3s, color 0.3s;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  transition: background 0.3s, color 0.3s;
 }
 
+/* SIDEBAR PERSISTENTE */
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  background: var(--sidebar);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  z-index: 100;
+}
+
+.sidebar-content {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#menu-lateral {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-link {
+  display: block;
+  padding: 8px 10px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+.menu-link:hover {
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
+/* MAIN AREA */
+.main {
+  margin-left: 280px; 
+  padding: 40px 20px;
+  width: calc(100% - 280px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* BOTÓN MODO OSCURO (ARRIBA A LA DERECHA) */
+.btn-oscuro {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+/* TARJETA ACERCA DE */
 .card {
-    width: 90%;
+    width: 100%;
     max-width: 650px;
     background: var(--bg);
     border: 1px solid var(--border);
@@ -43,6 +109,8 @@ body {
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    margin-top: 40px;
 }
 
 .logo-group {
@@ -55,9 +123,8 @@ body {
 }
 
 .logo-group img {
-    height: 70px;
+    height: 60px;
     width: auto;
-    /* Filtro opcional para que los logos se vean mejor en modo oscuro si no son transparentes */
 }
 
 h1 {
@@ -69,7 +136,7 @@ h1 {
 p {
     line-height: 1.8;
     margin-bottom: 20px;
-    font-size: 17px;
+    font-size: 16px;
     text-align: justify;
 }
 
@@ -87,7 +154,7 @@ p {
 
 .creator-info span {
     display: block;
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 5px;
@@ -110,24 +177,54 @@ p {
     font-weight: bold;
     transition: transform 0.2s;
 }
+.btn-back:hover { transform: scale(1.05); }
 
-.btn-back:hover {
-    transform: scale(1.05);
-}
-
-/* Ajuste de color para el título en modo oscuro */
-[data-theme="dark"] h1 {
-    color: #4caf50;
+/* MÓVIL */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 2px solid var(--border);
+  }
+  #menu-lateral {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 60px 15px 20px 15px;
+  }
+  .card { padding: 25px; }
+  h1 { font-size: 22px; }
 }
 </style>
 </head>
 <body>
 
-<div class="card">
+<div class="sidebar">
+  <div class="sidebar-content">
+      <img src="escudo.png" style="width:90px; margin: 10px auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
+      
+      <nav id="menu-lateral">
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/index.html#" class="menu-link">Inicio</a>
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/acerca%20de.html" class="menu-link">Acerca de</a>
+          <a href="file:///C:/Users/dinamizador/Desktop/SMR/Registro%20Biblioteca/descargar%20app.html#" class="menu-link">Descargar App</a>
+      </nav>
+  </div>
+</div>
+
+<div class="main">
+  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
+
+  <div class="card">
     <div class="logo-group">
-        <img src="escudo-ibros.png" alt="Escudo de Ibros">
-        <img src="logo-junta.png" alt="Junta de Andalucía">
-        <img src="logo-vuela.png" alt="Punto Vuela">
+        <img src="escudo-ibros.png" alt="Escudo de Ibros" onerror="this.style.display='none'">
+        <img src="logo-junta.png" alt="Junta de Andalucía" onerror="this.style.display='none'">
+        <img src="logo-vuela.png" alt="Punto Vuela" onerror="this.style.display='none'">
     </div>
 
     <h1>Sobre este Proyecto</h1>
@@ -150,30 +247,42 @@ p {
     </div>
 
     <a href="index.html" class="btn-back">← Volver al Registro</a>
+  </div>
 </div>
 
 <script>
-    // FUNCIÓN PARA SINCRONIZAR EL MODO OSCURO
-    function aplicarTema() {
-        // Lee la "nota" que dejó la página principal en el navegador
-        const temaGuardado = localStorage.getItem('tema-biblioteca');
-        
-        if (temaGuardado === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-        }
+// --- LÓGICA DE TEMA (Sincronizada con index.html) ---
+function toggleTema() {
+    const html = document.documentElement;
+    const btn = document.getElementById("btn-tema");
+    
+    if (html.getAttribute("data-theme") === "dark") {
+        html.removeAttribute("data-theme");
+        localStorage.setItem("tema", "light");
+        btn.innerText = "Modo Oscuro";
+    } else {
+        html.setAttribute("data-theme", "dark");
+        localStorage.setItem("tema", "dark");
+        btn.innerText = "Modo Claro";
     }
+}
 
-    // Se ejecuta nada más cargar la página
-    aplicarTema();
+function aplicarTemaAlCargar() {
+    const temaGuardado = localStorage.getItem("tema");
+    if (temaGuardado === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.getElementById("btn-tema").innerText = "Modo Claro";
+    }
+}
 
-    // Por si el usuario cambia el tema en otra pestaña abierta
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'tema-biblioteca') {
-            aplicarTema();
-        }
-    });
+aplicarTemaAlCargar();
+
+// Escucha por si cambias el tema en otra pestaña
+window.addEventListener('storage', (e) => {
+    if (e.key === 'tema') {
+        location.reload(); 
+    }
+});
 </script>
 
 </body>
