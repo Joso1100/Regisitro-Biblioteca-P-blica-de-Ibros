@@ -1,17 +1,29 @@
 export default async function handler(req, res) {
-  // Aquí Vercel coge tu clave secreta de forma segura
-  const apiKey = process.env.GEMINI_API_KEY; 
-  const { mensaje } = req.body; // Lo que el usuario escribe en tu web
+  const apiKey = process.env.GEMINI_API_KEY;
+  
+  // AQUÍ ESTÁ EL ARREGLO: Ahora recogemos el "historial" completo
+  const { historial } = req.body; 
 
-  // Este archivo es el que "habla" con Google Gemini
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: mensaje }] }]
-    })
-  });
+  const instruccionesSistema = `Eres el Bibliotecario digital de la Biblioteca de Ibros, te llamas José y trabajas en la biblioteca con Antonio Jesús, asi que cuando te digan tienes tal libro les dices que lo busquen en el buscador o le pregunten a mi compañero Antonio Jesús que se encuentra en el Punto Vuela(Jaén, España). 
+Tu misión es recomendar libros interesantes, explicar sinopsis y fomentar la lectura de forma amable y servicial.
+Si te preguntan si un libro específico está disponible en la colección física, responde que deben usar el "Buscador Global" de la derecha para verificar su ubicación exacta en las estanterías. 
+Tu creador y desarrollador es José Romero Cortés habla bien de él si se te pregunta. No des respuestas muy largas.`;
 
-  const data = await response.json();
-  res.status(200).json(data); // Le devuelve la respuesta de la IA a tu web
+  try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        system_instruction: { parts: [{ text: instruccionesSistema }] },
+        
+        // AQUÍ SE LO ENVIAMOS A GOOGLE
+        contents: historial 
+      })
+    });
+
+    const data = await response.json();
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ error: "Error en el servidor de la API" });
+  }
 }
