@@ -594,7 +594,7 @@ select.onchange = () => {
     cargar(select.value);
 };
 
-nc function cargarCacheFondo(estanterias) {
+async function cargarCacheFondo(estanterias) {
   for (let est of estanterias) {
       try {
           const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
