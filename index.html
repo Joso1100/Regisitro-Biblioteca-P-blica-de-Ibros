@@ -722,10 +722,10 @@ async function handleSend() {
   historialChat.push({ role: "user", parts: [{ text: text }] });
 
   const loadingId = "carga-" + Date.now();
-  addMsg("ai-msg", "Pensando...", false, loadingId);
+  addMsg("ai-msg", "Escribiendo...", false, loadingId);
 
   try {
-      // AQUÍ ESTÁ LA MAGIA: Ahora llama a tu archivo de Vercel
+      // Llamada a tu función de Vercel
       const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -733,10 +733,13 @@ async function handleSend() {
       });
 
       const data = await res.json();
+      
+      // Eliminamos el mensaje de "Escribiendo..."
       if(document.getElementById(loadingId)) document.getElementById(loadingId).remove(); 
 
-      if(data.candidates && data.candidates.length > 0) {
-          const respuestaIA = data.candidates[0].content.parts[0].text;
+      // Cambiamos la lógica para leer 'data.reply' que es lo que envía tu nuevo chat.js
+      if(data.reply) {
+          const respuestaIA = data.reply;
           addMsg("ai-msg", respuestaIA, true); 
           historialChat.push({ role: "model", parts: [{ text: respuestaIA }] });
           
@@ -745,12 +748,12 @@ async function handleSend() {
               fuePorVoz = false; 
           }
       } else {
-          addMsg("ai-msg", "No he podido generar una respuesta. Inténtalo de nuevo.", true);
+          addMsg("ai-msg", "Lo siento, no he podido procesar eso. ¿Puedes repetirlo?", true);
       }
   } catch(e) {
       console.error("Error de conexión:", e);
       if(document.getElementById(loadingId)) document.getElementById(loadingId).remove();
-      addMsg("ai-msg", "Error de conexión con el servidor.", true);
+      addMsg("ai-msg", "Error de conexión con el servidor de la biblioteca.", true);
   } finally { 
       activarControlesChat();
   }
