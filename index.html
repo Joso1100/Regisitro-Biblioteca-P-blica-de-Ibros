@@ -726,7 +726,7 @@ async function handleSend() {
 
   try {
       // Llamada a tu función de Vercel
-      const res = await fetch("/api/chat", {
+      const res = await fetch("https://regisitro-biblioteca-p-blica-de-ibr.vercel.app/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ historial: historialChat.slice(-10) })
