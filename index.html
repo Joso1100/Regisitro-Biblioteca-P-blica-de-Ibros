@@ -65,7 +65,6 @@ body {
   gap: 10px;
 }
 
-/* ESTILOS DEL MENÚ SIMPLE (SIN RECUADROS) */
 .menu-link {
   display: block;
   padding: 8px 10px;
@@ -204,7 +203,6 @@ body {
   position: relative; 
 }
 
-/* BOTÓN MODO OSCURO (ARRIBA A LA DERECHA) */
 .btn-oscuro {
   position: absolute;
   top: 20px;
@@ -220,11 +218,7 @@ body {
   transition: 0.3s;
   z-index: 1000;
 }
-.btn-oscuro:hover {
-  background: var(--border);
-}
 
-/* CONTENEDOR PARA EL TÍTULO Y LA IMAGEN */
 .header-container {
   display: flex;
   align-items: center; 
@@ -278,7 +272,6 @@ h1 {
   cursor: pointer;
 }
 
-/* TABLA ALINEADA A LA IZQUIERDA */
 .table-responsive {
   width: 100%;
 }
@@ -314,170 +307,21 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
   display: block;
   margin-top: 3px;
 }
-/* ========================= */
-/* 📱 MÓVIL ESTILO APP PRO */
-/* ========================= */
+
 @media (max-width: 768px) {
-
-  /* Layout base */
-  body {
-    flex-direction: column;
-  }
-
-  .main {
-    margin-left: 0;
-    width: 100%;
-    padding: 10px;
-  }
-
-  /* Ocultamos sidebar clásica */
-  .sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-top: 1px solid var(--border);
-    background: var(--bg);
-    z-index: 1000;
-  }
-
-  .sidebar-content {
-    display: none; /* ocultamos menú */
-  }
-
-  /* ===================== */
-  /* 💬 CHAT TIPO APP */
-  /* ===================== */
-  #sidebar-chat {
-    height: 60px;
-    min-height: unset;
-    margin: 0;
-    border-radius: 0;
-    border: none;
-    transition: height 0.3s ease;
-  }
-
-  /* Cuando el usuario toca el input (abre chat) */
-  #sidebar-chat:focus-within {
-    height: 60vh;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
-  }
-
-  .chat-header {
-    font-size: 13px;
-    padding: 8px;
-    text-align: left;
-  }
-
-  #chat-messages {
-    font-size: 13px;
-    padding: 10px;
-  }
-
-  .msg {
-    padding: 8px;
-    font-size: 13px;
-  }
-
-  /* Input bonito tipo app */
-  .chat-controls {
-    padding: 8px;
-    background: var(--bg);
-  }
-
-  #chat-input {
-    font-size: 14px;
-    padding: 10px 15px;
-    border-radius: 25px;
-  }
-
-  #mic-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 15px;
-  }
-
-  /* ===================== */
-  /* 🔍 BUSCADOR PRO */
-  /* ===================== */
-  .toolbar {
-    flex-direction: column;
-    gap: 8px;
-    margin: 10px 0;
-  }
-
-  #searchInput {
-    width: 100%;
-    font-size: 14px;
-  }
-
-  #estanterias {
-    width: 100%;
-  }
-
-  /* ===================== */
-  /* 🧾 TABLA COMPACTA */
-  /* ===================== */
-  table {
-    width: 100%;
-    font-size: 13px;
-  }
-
-  td, th {
-    padding: 8px;
-  }
-
-  th:nth-child(1), td:nth-child(1) { width: 45%; }
-  th:nth-child(2), td:nth-child(2) { width: 30%; }
-  th:nth-child(3), td:nth-child(3) { width: 25%; }
-
-  /* ===================== */
-  /* 🧠 BOTÓN IA (VISUAL) */
-  /* ===================== */
-  #sidebar-chat::before {
-    content: "🤖 IA";
-    position: absolute;
-    top: -40px;
-    right: 15px;
-    background: #444;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  }
-
-  /* ===================== */
-  /* HEADER MÁS LIMPIO */
-  /* ===================== */
-  .header-container {
-    flex-direction: column;
-    padding: 0;
-    min-height: unset;
-  }
-
-  .header-container img {
-    position: static;
-    width: 90px;
-    height: 90px;
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    font-size: 18px;
-  }
-
-  /* Botón oscuro pequeño */
-  .btn-oscuro {
-    top: 10px;
-    right: 10px;
-    padding: 6px 10px;
-    font-size: 12px;
-  }
+  body { flex-direction: column; }
+  .main { margin-left: 0; width: 100%; padding: 10px; }
+  .sidebar { position: fixed; bottom: 0; left: 0; width: 100%; height: auto; border-right: none; border-top: 1px solid var(--border); background: var(--bg); z-index: 1000; }
+  .sidebar-content { display: none; }
+  #sidebar-chat { height: 60px; min-height: unset; margin: 0; border-radius: 0; border: none; transition: height 0.3s ease; }
+  #sidebar-chat:focus-within { height: 60vh; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); }
+  .chat-header { font-size: 13px; padding: 8px; text-align: left; }
+  .header-container { flex-direction: column; padding: 0; min-height: unset; }
+  .header-container img { position: static; width: 90px; height: 90px; margin-bottom: 10px; }
+  h1 { font-size: 18px; }
+  .btn-oscuro { top: 10px; right: 10px; padding: 6px 10px; font-size: 12px; }
+  #sidebar-chat::before { content: "🤖 IA"; position: absolute; top: -40px; right: 15px; background: #444; color: white; padding: 8px 14px; border-radius: 20px; font-size: 12px; }
 }
-
 </style>
 </head>
 
@@ -486,7 +330,6 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 <div class="sidebar">
   <div class="sidebar-content">
       <img src="escudo.png" style="width:90px; margin: 0 auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
-      
       <nav id="menu-lateral">
           <a href="index.html" class="menu-link">Inicio</a>
           <a href="acerca de.html" class="menu-link">Acerca de</a>
@@ -532,11 +375,10 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 </div>
 
 <script>
-// --- LÓGICA DEL MODO OSCURO ---
+// --- LÓGICA TEMA ---
 function toggleTema() {
     const html = document.documentElement;
     const btn = document.getElementById("btn-tema");
-    
     if (html.getAttribute("data-theme") === "dark") {
         html.removeAttribute("data-theme");
         localStorage.setItem("tema", "light");
@@ -547,16 +389,13 @@ function toggleTema() {
         btn.innerText = "Modo Claro";
     }
 }
-
-// Cargar preferencia al iniciar
 if (localStorage.getItem("tema") === "dark") {
     document.documentElement.setAttribute("data-theme", "dark");
     document.getElementById("btn-tema").innerText = "Modo Claro";
 }
-// ------------------------------
 
+// --- CONFIGURACIÓN ---
 const API_URL = "https://script.google.com/macros/s/AKfycbyBLvG-_RfWct0oych5RoIeQAlK-LpC-Xprp9SM4auL2kwMj81vXLpfg7cEsPKDWaOK/exec";
-const GEMINI_KEY = "AIzaSyANJvyokJMjahrKqxw4vtJ4EwsdK69ACCQ";
 
 const tabla = document.getElementById("cuerpoTabla");
 const select = document.getElementById("estanterias");
@@ -569,8 +408,7 @@ let librosCache = [];
 let fuePorVoz = false; 
 
 async function init() {
-  addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte recomendaciones o ayudarte a buscar. ¿Qué te apetece leer hoy?", true);
-  
+  addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. ¿Qué te apetece leer hoy?", true);
   try {
       const res = await fetch(`${API_URL}?action=getEstanterias`);
       const data = await res.json();
@@ -585,15 +423,23 @@ async function init() {
       activarControlesChat();
       cargarCacheFondo(data);
   } catch(e) {
-      console.error("Error durante la inicialización:", e);
+      console.error("Error inicializando:", e);
       activarControlesChat();
   }
 }
 
-select.onchange = () => { 
-    searchInput.value = ""; 
-    cargar(select.value);
-};
+async function cargar(est) {
+  try {
+      const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
+      const libros = await res.json();
+      tabla.innerHTML = libros
+          .filter(l => l.titulo && !String(l.titulo).includes("Título"))
+          .map(l => `<tr><td>${l.titulo}</td><td>${l.autor || "Anónimo"}</td><td>${l.id || "N/A"}</td></tr>`)
+          .join("");
+  } catch(e) {
+      tabla.innerHTML = "<tr><td colspan='3'>Error cargando datos.</td></tr>";
+  }
+}
 
 async function cargarCacheFondo(estanterias) {
   for (let est of estanterias) {
@@ -610,108 +456,11 @@ async function cargarCacheFondo(estanterias) {
                   });
               }
           });
-      } catch(e) {
-          console.warn(`Error cargando caché para estantería ${est}:`, e);
-      }
+      } catch(e) {}
   }
 }
 
-async function cargar(est) {
-  try {
-      const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-      const libros = await res.json();
-      tabla.innerHTML = libros
-          .filter(l => l.titulo && !String(l.titulo).includes("Título"))
-          .map(l => `<tr><td>${l.titulo}</td><td>${l.autor || "Anónimo"}</td><td>${l.id || "N/A"}</td></tr>`)
-          .join("");
-  } catch(e) {
-      console.error(`Error cargando libros de ${est}:`, e);
-      tabla.innerHTML = "<tr><td colspan='3'>Error cargando datos.</td></tr>";
-  }
-}
-
-let temporizadorBuscador;
-searchInput.onkeyup = function() {
-  clearTimeout(temporizadorBuscador); 
-  const v = this.value.toLowerCase().trim();
-  temporizadorBuscador = setTimeout(() => {
-      if (v === "") { 
-          cargar(select.value); 
-          return;
-      }
-      const resultados = librosCache.filter(l => 
-          l.titulo.toLowerCase().includes(v) || 
-          l.autor.toLowerCase().includes(v) ||
-          l.id.toLowerCase().includes(v)
-      );
-      tabla.innerHTML = resultados.map(l => `<tr>
-          <td>${l.titulo} <span class="ubicacion-tag">📍 ${l.estanteria}</span></td>
-          <td>${l.autor}</td>
-          <td>${l.id}</td>
-      </tr>`).join("");
-  }, 300); 
-};
-
-function leerVozAlta(texto) {
-  if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); 
-      const voz = new SpeechSynthesisUtterance(texto);
-      voz.lang = 'es-ES'; 
-      voz.rate = 1.0; 
-      window.speechSynthesis.speak(voz);
-  } else {
-      console.warn("La síntesis de voz no está soportada en este navegador.");
-  }
-}
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-let reconocimientoVoz;
-if (SpeechRecognition) {
-  reconocimientoVoz = new SpeechRecognition();
-  reconocimientoVoz.lang = 'es-ES';
-  reconocimientoVoz.continuous = false;
-  reconocimientoVoz.interimResults = false;
-
-  reconocimientoVoz.onstart = () => { 
-      micBtn.classList.add("escuchando"); 
-      chatInput.placeholder = "Escuchando...";
-      desactivarControlesChat(); 
-  };
-  reconocimientoVoz.onresult = (e) => { 
-      const transcript = e.results[0][0].transcript;
-      chatInput.value = transcript;
-      fuePorVoz = true; 
-      handleSend(); 
-  };
-  reconocimientoVoz.onerror = (e) => {
-      console.error("Error de reconocimiento de voz:", e);
-      restaurarInterfazVoz();
-  };
-  reconocimientoVoz.onend = () => restaurarInterfazVoz();
-} else {
-    micBtn.style.display = 'none'; 
-    console.warn("El reconocimiento de voz no está soportado en este navegador.");
-}
-
-function iniciarVoz() { 
-    if (reconocimientoVoz) reconocimientoVoz.start();
-}
-function restaurarInterfazVoz() { 
-    micBtn.classList.remove("escuchando"); 
-    chatInput.placeholder = "Escribe..."; 
-    chatInput.disabled = false; 
-    micBtn.disabled = false;
-    chatInput.focus();
-}
-function activarControlesChat() { 
-    chatInput.disabled = false; 
-    micBtn.disabled = false;
-}
-function desactivarControlesChat() { 
-    chatInput.disabled = true; 
-    micBtn.disabled = true;
-}
-
+// --- LÓGICA CHAT VERCEL ---
 async function handleSend() {
   const text = chatInput.value.trim();
   if(!text) return;
@@ -725,91 +474,76 @@ async function handleSend() {
   const loadingId = "carga-" + Date.now();
   addMsg("ai-msg", "Pensando...", false, loadingId);
 
-  const instruccionesSistema = `Eres el Bibliotecario digital de la Biblioteca de Ibros, te llamas José y trabajas en la biblioteca con Antonio Jesús, asi que cuando te digan tienes tal libro les dices que lo busquen en el buscador o le pregunten a mi compañero Antonio Jesús que se encuentra en el Punto Vuela(Jaén, España). 
-Tu misión es recomendar libros interesantes, explicar sinopsis y fomentar la lectura de forma amable y servicial.
-Si te preguntan si un libro específico está disponible en la colección física, responde que deben usar el "Buscador Global" de la derecha para verificar su ubicación exacta en las estanterías. 
-Tu creador y desarrollador es José Romero Cortés habla bien de él si se te pregunta. No des respuestas muy largas.
-`;
-
   try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_KEY}`, {
+      // LLAMADA A TU NUEVA API EN VERCEL
+      const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-              system_instruction: { parts: [{ text: instruccionesSistema }] },
-              contents: historialChat.slice(-10) 
-          })
+          body: JSON.stringify({ historial: historialChat.slice(-10) })
       });
 
       const data = await res.json();
-      document.getElementById(loadingId).remove(); 
+      if(document.getElementById(loadingId)) document.getElementById(loadingId).remove(); 
 
       if(data.candidates && data.candidates.length > 0) {
           const respuestaIA = data.candidates[0].content.parts[0].text;
           addMsg("ai-msg", respuestaIA, true); 
           historialChat.push({ role: "model", parts: [{ text: respuestaIA }] });
-          
-          if (fuePorVoz) { 
-              leerVozAlta(respuestaIA);
-              fuePorVoz = false; 
-          }
-      } else if (data.error) {
-          addMsg("ai-msg", `Error de API: ${data.error.message}`, true);
-          console.error("Error de API:", data.error);
+          if (fuePorVoz) { leerVozAlta(respuestaIA); fuePorVoz = false; }
       } else {
-          addMsg("ai-msg", "No he podido generar una respuesta. Inténtalo de nuevo.", true);
+          addMsg("ai-msg", "No he podido responder ahora mismo.", true);
       }
   } catch(e) {
-      console.error("Error de conexión:", e);
-      document.getElementById(loadingId).remove();
-      addMsg("ai-msg", "Error de conexión con el asistente.", true);
+      if(document.getElementById(loadingId)) document.getElementById(loadingId).remove();
+      addMsg("ai-msg", "Error de conexión con el servidor.", true);
   } finally { 
       activarControlesChat();
   }
 }
 
+// --- VOZ Y OTROS ---
+function leerVozAlta(texto) {
+  if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); 
+      const voz = new SpeechSynthesisUtterance(texto);
+      voz.lang = 'es-ES'; 
+      window.speechSynthesis.speak(voz);
+  }
+}
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let reconocimientoVoz;
+if (SpeechRecognition) {
+  reconocimientoVoz = new SpeechRecognition();
+  reconocimientoVoz.lang = 'es-ES';
+  reconocimientoVoz.onstart = () => { micBtn.classList.add("escuchando"); desactivarControlesChat(); };
+  reconocimientoVoz.onresult = (e) => { chatInput.value = e.results[0][0].transcript; fuePorVoz = true; handleSend(); };
+  reconocimientoVoz.onend = () => restaurarInterfazVoz();
+}
+
+function iniciarVoz() { if (reconocimientoVoz) reconocimientoVoz.start(); }
+function restaurarInterfazVoz() { micBtn.classList.remove("escuchando"); chatInput.disabled = false; micBtn.disabled = false; chatInput.focus(); }
+function activarControlesChat() { chatInput.disabled = false; micBtn.disabled = false; }
+function desactivarControlesChat() { chatInput.disabled = true; micBtn.disabled = true; }
+
 function addMsg(tipo, texto, altavoz = false, id = null) {
   const d = document.createElement("div");
   d.className = "msg " + tipo; 
   if (id) d.id = id;
-  
   const s = document.createElement("span"); 
-  s.className = "texto-msg"; 
-  s.innerText = texto; 
-  d.appendChild(s);
-  
+  s.className = "texto-msg"; s.innerText = texto; d.appendChild(s);
   if (altavoz && tipo === "ai-msg") {
-      const a = document.createElement("span"); 
-      a.className = "altavoz"; 
-      a.innerHTML = "🔊"; 
-      a.title = "Escuchar mensaje";
-      a.onclick = () => leerVozAlta(texto); 
-      d.appendChild(a);
+      const a = document.createElement("span"); a.className = "altavoz"; a.innerHTML = "🔊"; a.onclick = () => leerVozAlta(texto); d.appendChild(a);
   }
-  
   const container = document.getElementById("chat-messages");
   container.appendChild(d);
   container.scrollTop = container.scrollHeight; 
   return d;
 }
 
-chatInput.onkeypress = (e) => { 
-    if (e.key === "Enter") { 
-        fuePorVoz = false; 
-        handleSend();
-    } 
-};
-
+chatInput.onkeypress = (e) => { if (e.key === "Enter") { fuePorVoz = false; handleSend(); } };
+select.onchange = () => { searchInput.value = ""; cargar(select.value); };
 init();
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('Service Worker registrado correctamente.', reg))
-        .catch(err => console.error('Error al registrar el Service Worker:', err));
-    });
-  }
 </script>
 </body>
 </html>
