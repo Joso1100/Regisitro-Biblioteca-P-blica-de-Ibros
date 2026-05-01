@@ -315,69 +315,46 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
   margin-top: 3px;
 }
 /* ========================= */
-/* 📱 MÓVIL ESTILO APP PRO */
+/* 📱 MÓVIL: CHAT INTEGRADO */
 /* ========================= */
 @media (max-width: 768px) {
   body { flex-direction: column; }
   .main { margin-left: 0; width: 100%; padding: 10px; }
 
-  /* --- NUEVO BOTÓN FLOTANTE --- */
-  #mobile-chat-btn {
-    display: flex;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #2a2a2a;
-    color: white;
-    border: 2px solid var(--border);
-    border-radius: 50px;
-    padding: 12px 18px;
-    font-size: 15px;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    cursor: pointer;
-    z-index: 2000;
-    transition: 0.3s;
-  }
-  [data-theme="dark"] #mobile-chat-btn { background: #444; }
-
-  /* --- PANEL DESLIZANTE DEL CHAT --- */
+  /* La barra lateral ahora se coloca arriba del todo de forma natural */
   .sidebar {
-    position: fixed;
-    bottom: -100%; /* Oculto por defecto abajo */
-    left: 0;
+    position: relative;
     width: 100%;
-    height: 75vh;
+    height: auto;
     border-right: none;
-    border-top: 2px solid var(--border);
-    border-radius: 20px 20px 0 0;
+    border-bottom: 1px solid var(--border);
     background: var(--bg);
-    z-index: 1500;
-    transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 -10px 25px rgba(0,0,0,0.2);
+    padding-bottom: 15px;
   }
 
-  /* Clase que activa JavaScript para subir el panel */
-  .sidebar.abierto { bottom: 0; }
+  /* Ocultamos el logo y el menú lateral para no ocupar media pantalla */
+  .sidebar-content { display: none; }
 
-  .sidebar-content { display: none; } /* Ocultamos el logo del menú lateral */
-
+  /* La caja del chat se muestra siempre, fija y accesible */
   #sidebar-chat {
-    height: 100%;
-    margin: 0;
-    border: none;
-    border-radius: 20px 20px 0 0;
+    height: 350px; /* Altura controlada para dejar ver la tabla de abajo */
+    margin: 15px 10px 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   }
 
-  .chat-header { border-radius: 20px 20px 0 0; padding: 15px; font-size: 16px; }
+  .chat-header { border-radius: 15px 15px 0 0; }
 
-  /* --- RESTO DE LA WEB --- */
-  .header-container { flex-direction: column; padding: 0; min-height: auto; margin-top: 50px; }
-  .header-container img { position: static; width: 80px; height: 80px; margin-bottom: 10px; }
-  h1 { font-size: 18px; }
-  .btn-oscuro { top: 10px; right: 10px; padding: 8px 12px; font-size: 12px; }
+  /* Ajustes del título y buscador para que queden debajo del chat */
+  .header-container { flex-direction: column; padding: 0; min-height: auto; margin-top: 15px; }
+  .header-container img { width: 70px; height: 70px; margin-bottom: 5px; position: static; }
+  h1 { font-size: 18px; text-align: center; }
+  
+  .btn-oscuro { top: 10px; right: 10px; padding: 6px 10px; font-size: 12px; }
   .toolbar { flex-direction: column; gap: 8px; margin: 10px 0; }
-  #searchInput, #estanterias { width: 100%; }
+  #searchInput, #estanterias { width: 100%; box-sizing: border-box; }
+  
   table { width: 100%; font-size: 13px; }
   td, th { padding: 8px; }
   th:nth-child(1), td:nth-child(1) { width: 45%; }
@@ -385,9 +362,80 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
   th:nth-child(3), td:nth-child(3) { width: 25%; }
 }
 
-/* Ocultar el botón flotante en PC */
-@media (min-width: 769px) {
-  #mobile-chat-btn { display: none !important; }
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-content">
+      <img src="escudo.png" style="width:90px; margin: 0 auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
+      
+      <nav id="menu-lateral">
+          <a href="index.html" class="menu-link">Inicio</a>
+          <a href="acerca de.html" class="menu-link">Acerca de</a>
+          <a href="descargar app.html" class="menu-link">Descargar App</a>
+      </nav>
+  </div>
+
+  <div id="sidebar-chat">
+      <div class="chat-header">Bibliotecario Digital</div>
+      <div id="chat-messages"></div>
+      <div class="chat-controls">
+          <input id="chat-input" placeholder="Escribe tu mensaje..." disabled>
+          <button id="mic-btn" onclick="iniciarVoz()" title="Hablar por micrófono" disabled>🎙️</button>
+      </div>
+  </div>
+</div>
+
+<div class="main">
+  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
+  
+  <div class="header-container">
+      <img src="640px-Escudo_de_Ibros_(Jaén).svg.png">
+      <h1>Registro Biblioteca Pública de Ibros</h1>
+  </div>
+
+  <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="Busca por nombre, autor o código...">
+      <select id="estanterias"></select>
+  </div>
+
+  <div class="table-responsive">
+      <table>
+          <thead>
+              <tr>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Código</th>
+              </tr>
+          </thead>
+          <tbody id="cuerpoTabla"></tbody>
+      </table>
+  </div>
+</div>
+
+<script>
+// --- LÓGICA DEL MODO OSCURO ---
+function toggleTema() {
+    const html = document.documentElement;
+    const btn = document.getElementById("btn-tema");
+    
+    if (html.getAttribute("data-theme") === "dark") {
+        html.removeAttribute("data-theme");
+        localStorage.setItem("tema", "light");
+        btn.innerText = "Modo Oscuro";
+    } else {
+        html.setAttribute("data-theme", "dark");
+        localStorage.setItem("tema", "dark");
+        btn.innerText = "Modo Claro";
+    }
+}
+
+// Cargar preferencia al iniciar
+if (localStorage.getItem("tema") === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.getElementById("btn-tema").innerText = "Modo Claro";
 }
 // ------------------------------
 
