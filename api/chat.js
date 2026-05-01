@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         "ngrok-skip-browser-warning": "true" // Evita la pantalla de advertencia de Ngrok
       },
       body: JSON.stringify({
-        model: "phi3", // Asegúrate de haber hecho 'ollama pull llama3' en tu PC
+        model: "llama3", // Asegúrate de haber hecho 'ollama pull llama3' en tu PC
         messages: [
           { role: "system", content: instruccionesSistema },
           ...contentsValido.map(msg => ({
