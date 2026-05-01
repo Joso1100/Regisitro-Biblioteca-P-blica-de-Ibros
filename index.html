@@ -500,7 +500,7 @@ let librosCache = [];
 let fuePorVoz = false; 
 
 async function init() {
-  addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte recomendaciones o ayudarte a buscar. ¿Qué te apetece leer hoy?", true);
+  addMsg("ai-msg", "¡Hola! Soy el Bibliotecario digital de Ibros. Puedo resumirte libros, darte recomendaciones o ayudarte a buscar. ¿Qué te apetece leer hoy?", true);
   
   try {
       const res = await fetch(`${API_URL}?action=getEstanterias`);
@@ -595,44 +595,72 @@ function leerVozAlta(texto) {
   }
 }
 
+// --- LÓGICA DE RECONOCIMIENTO DE VOZ (TOGGLE & COMPATIBILIDAD) ---
+let estaGrabando = false; 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let reconocimientoVoz;
-if (SpeechRecognition) {
-  reconocimientoVoz = new SpeechRecognition();
-  reconocimientoVoz.lang = 'es-ES';
-  reconocimientoVoz.continuous = false;
-  reconocimientoVoz.interimResults = false;
 
-  reconocimientoVoz.onstart = () => { 
-      micBtn.classList.add("escuchando"); 
-      chatInput.placeholder = "Escuchando...";
-      desactivarControlesChat(); 
-  };
-  reconocimientoVoz.onresult = (e) => { 
-      const transcript = e.results[0][0].transcript;
-      chatInput.value = transcript;
-      fuePorVoz = true; 
-      handleSend(); 
-  };
-  reconocimientoVoz.onerror = (e) => {
-      console.error("Error de reconocimiento de voz:", e);
-      restaurarInterfazVoz();
-  };
-  reconocimientoVoz.onend = () => restaurarInterfazVoz();
+if (SpeechRecognition) {
+    reconocimientoVoz = new SpeechRecognition();
+    reconocimientoVoz.lang = 'es-ES';
+    reconocimientoVoz.continuous = false; // Mejor para PC, evita bucles
+    reconocimientoVoz.interimResults = false;
+
+    reconocimientoVoz.onstart = () => { 
+        estaGrabando = true;
+        micBtn.classList.add("escuchando"); 
+        micBtn.innerHTML = "⏹️"; // Cambia el icono a "parar"
+        chatInput.placeholder = "Escuchando... pulsa el micro para parar";
+        desactivarControlesChat(); 
+    };
+
+    reconocimientoVoz.onresult = (e) => { 
+        const transcript = e.results[0][0].transcript;
+        chatInput.value = transcript;
+        fuePorVoz = true; 
+        handleSend(); 
+    };
+
+    reconocimientoVoz.onerror = (e) => {
+        console.error("Error de reconocimiento de voz:", e.error);
+        if(e.error === 'not-allowed') {
+            alert("Error: El acceso al micrófono está bloqueado por el navegador o requiere HTTPS.");
+        }
+        restaurarInterfazVoz();
+    };
+
+    reconocimientoVoz.onend = () => {
+        restaurarInterfazVoz();
+    };
 } else {
     micBtn.style.display = 'none'; 
-    console.warn("El reconocimiento de voz no está soportado en este navegador.");
+    console.warn("Este navegador no soporta la API de voz.");
 }
 
+// Función que se activa al hacer CLICK en el botón
 function iniciarVoz() { 
-    if (reconocimientoVoz) reconocimientoVoz.start();
+    if (!reconocimientoVoz) return;
+
+    if (!estaGrabando) {
+        try {
+            reconocimientoVoz.start();
+        } catch (e) {
+            console.error("No se pudo iniciar el micro:", e);
+        }
+    } else {
+        // SI YA ESTÁ GRABANDO, LO PARAMOS MANUALMENTE
+        reconocimientoVoz.stop();
+        restaurarInterfazVoz();
+    }
 }
+
 function restaurarInterfazVoz() { 
+    estaGrabando = false;
     micBtn.classList.remove("escuchando"); 
+    micBtn.innerHTML = "🎙️"; // Vuelve al icono original
     chatInput.placeholder = "Escribe..."; 
     chatInput.disabled = false; 
     micBtn.disabled = false;
-    chatInput.focus();
 }
 function activarControlesChat() { 
     chatInput.disabled = false; 
