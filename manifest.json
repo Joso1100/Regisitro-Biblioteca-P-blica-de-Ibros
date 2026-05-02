@@ -7,7 +7,7 @@
   "theme_color": "#444444",
   "icons": [
     {
-      "src": "gemini1909px.png",
+      "src": "gemini190px.png",
       "sizes": "192x192",
       "type": "image/png"
     },
