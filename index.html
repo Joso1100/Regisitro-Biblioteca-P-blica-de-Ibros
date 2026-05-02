@@ -17,7 +17,6 @@
   --border: #ddd;
   --input-bg: #f5f5f5;
   --sidebar: #f0f0f0;
-  --accent: #444; 
   --chat-ai-bg: #e1e1e1;
 }
 [data-theme="dark"] {
@@ -35,113 +34,41 @@ body {
   background: var(--bg);
   color: var(--text);
   display: flex;
+  flex-direction: column; /* Cambiado para que todo fluya hacia abajo */
   transition: background 0.3s, color 0.3s;
 }
 
-/* SIDEBAR (Escritorio - Izquierda) */
-.sidebar {
-  width: 280px;
-  height: 100vh;
+/* MENÚ SUPERIOR HORIZONTAL (Para todas las vistas) */
+.nav-container {
+  width: 100%;
   background: var(--sidebar);
-  position: fixed;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+  z-index: 1000;
   display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--border);
-  z-index: 100;
-}
-
-.sidebar-content {
-  padding: 20px;
-  text-align: center;
+  justify-content: center;
 }
 
 #menu-lateral {
-  margin-top: 20px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row; /* Siempre horizontal */
+  gap: 20px;
 }
 
 .menu-link {
-  display: block;
-  padding: 8px 10px;
+  padding: 8px 15px;
   color: var(--text);
   text-decoration: none;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
-  transition: opacity 0.2s;
-}
-.menu-link:hover { opacity: 0.6; text-decoration: underline; }
-
-/* CHAT INTEGRADO */
-#sidebar-chat {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
 }
 
-.chat-header {
-  background: var(--input-bg);
-  padding: 12px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 15px;
-  border-bottom: 1px solid var(--border);
-}
-
-#chat-messages {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 10px;
-  font-size: 13px;
-}
-
-.msg {
-  padding: 8px;
-  border-radius: 10px;
-  margin-bottom: 6px;
-  max-width: 85%;
-  word-wrap: break-word;
-}
-.user-msg { background: #555; color: white; margin-left: auto; }
-.ai-msg { background: var(--chat-ai-bg); }
-
-.chat-controls {
-  padding: 10px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-}
-
-#chat-input {
-  flex-grow: 1;
-  padding: 10px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--input-bg);
-  color: var(--text);
-  outline: none;
-}
-
-#mic-btn {
-  cursor: pointer;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--border);
-  background: var(--input-bg);
-}
-
-/* ÁREA PRINCIPAL */
+/* ÁREA DE CONTENIDO PRINCIPAL */
 .main {
-  margin-left: 280px; 
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
-  width: calc(100% - 280px);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -155,303 +82,147 @@ body {
   border: 1px solid var(--border);
   border-radius: 20px;
   cursor: pointer;
-  font-weight: bold;
 }
 
+/* HEADER: ESCUDO PRIMERO, LUEGO TÍTULO */
 .header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   margin: 20px 0;
-  gap: 15px;
 }
 
 .header-container img {
   height: 180px;
   width: auto;
-  object-fit: contain;
+  margin-bottom: 15px; /* Separación con el título */
 }
 
-h1 { margin: 0; font-size: 24px; }
+h1 { margin: 0; font-size: 26px; font-weight: 800; }
 
-.toolbar {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
+/* CHAT IA (Debajo del Título) */
+#sidebar-chat {
+  width: 100%;
+  height: 400px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  overflow: hidden;
   margin: 20px 0;
+  display: flex;
+  flex-direction: column;
 }
 
-#searchInput, #estanterias {
-  padding: 12px 20px;
-  border-radius: 50px;
+.chat-header {
+  background: var(--input-bg);
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#chat-messages { flex-grow: 1; overflow-y: auto; padding: 10px; font-size: 14px; }
+
+.msg { padding: 10px; border-radius: 10px; margin-bottom: 8px; max-width: 80%; }
+.user-msg { background: #555; color: white; align-self: flex-end; margin-left: auto; }
+.ai-msg { background: var(--chat-ai-bg); }
+
+.chat-controls {
+  padding: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+}
+
+#chat-input {
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 25px;
   border: 1px solid var(--border);
   background: var(--input-bg);
   color: var(--text);
 }
 
-.table-responsive { width: 100%; overflow-x: auto; }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
+/* BUSCADOR Y TABLA (Debajo de la IA) */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-th, td {
+#searchInput, #estanterias {
   padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  flex-grow: 1;
 }
 
-/* ========================= */
-/* 📱 DISEÑO MÓVIL (CORREGIDO) */
-/* ========================= */
-@media (max-width: 768px) {
-  body { flex-direction: column; }
-  
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    order: 1; /* Menú arriba */
-  }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
 
-  .sidebar-content img { display: none; }
-  
-  #menu-lateral {
-    flex-direction: row; 
-    justify-content: center;
-    margin-top: 0;
-    padding-bottom: 10px;
-  }
-
-  #sidebar-chat {
-    height: 350px;
-    margin: 10px;
-    order: 3; /* IA después del título */
-  }
-
-  .main {
-    margin-left: 0;
-    width: 100%;
-    order: 2;
-  }
-
-  .header-container { order: 1; margin-top: 10px; }
-  .header-container img { height: 100px; }
-
-  .toolbar { order: 4; flex-direction: column; padding: 0 10px; }
-  #searchInput, #estanterias { width: 100%; }
-
-  .table-responsive { order: 5; padding: 10px; }
-
-  /* Estilo tarjetas para tabla móvil */
-  table, thead, tbody, th, td, tr { display: block; }
-  thead { display: none; }
-  tr { margin-bottom: 15px; background: var(--input-bg); border-radius: 10px; padding: 10px; border: 1px solid var(--border); }
-  td { border: none; padding: 5px 0; font-size: 14px; }
-  td:nth-of-type(1) { font-weight: bold; font-size: 16px; }
-  td:nth-of-type(2):before { content: "Autor: "; color: #888; }
-  td:nth-of-type(3):before { content: "Código: "; color: #888; }
+/* AJUSTES MÓVIL */
+@media (max-width: 600px) {
+  .header-container img { height: 120px; }
+  h1 { font-size: 20px; }
+  .toolbar { flex-direction: column; }
+  #sidebar-chat { height: 350px; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-  <div class="sidebar-content">
-      <nav id="menu-lateral">
-          <a href="index.html" class="menu-link">Inicio</a>
-          <a href="acerca de.html" class="menu-link">Acerca de</a>
-          <a href="descargar app.html" class="menu-link">App</a>
-      </nav>
-  </div>
+<!-- 1. MENU (Arriba de todo) -->
+<header class="nav-container">
+    <nav id="menu-lateral">
+        <a href="index.html" class="menu-link">Inicio</a>
+        <a href="acerca de.html" class="menu-link">Acerca de</a>
+        <a href="descargar app.html" class="menu-link">App</a>
+    </nav>
+</header>
 
-  <div id="sidebar-chat">
-      <div class="chat-header">Bibliotecario Digital</div>
-      <div id="chat-messages"></div>
-      <div class="chat-controls">
-          <input id="chat-input" placeholder="Pregúntame algo..." disabled>
-          <button id="mic-btn" onclick="iniciarVoz()" disabled>🎙️</button>
-      </div>
-  </div>
-</div>
+<main class="main">
+    <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
 
-<div class="main">
-  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
-  
-  <div class="header-container">
-      <img src="640px-Escudo_de_Ibros_(Jaén).svg.png" alt="Escudo de Ibros">
-      <h1>Registro Biblioteca Pública de Ibros</h1>
-  </div>
+    <!-- 2. ESCUDO Y TÍTULO (En ese orden) -->
+    <div class="header-container">
+        <img src="640px-Escudo_de_Ibros_(Jaén).svg.png" alt="Escudo de Ibros">
+        <h1>Registro Biblioteca Pública de Ibros</h1>
+    </div>
 
-  <div class="toolbar">
-      <input type="text" id="searchInput" placeholder="Buscar por título, autor...">
-      <select id="estanterias"></select>
-  </div>
+    <!-- 3. IA (Debajo del título) -->
+    <div id="sidebar-chat">
+        <div class="chat-header">Asistente Digital</div>
+        <div id="chat-messages"></div>
+        <div class="chat-controls">
+            <input id="chat-input" placeholder="Escribe aquí..." disabled>
+            <button id="mic-btn" onclick="iniciarVoz()" disabled>🎙️</button>
+        </div>
+    </div>
 
-  <div class="table-responsive">
-      <table>
-          <thead>
-              <tr>
-                  <th>Título</th>
-                  <th>Autor</th>
-                  <th>Código</th>
-              </tr>
-          </thead>
-          <tbody id="cuerpoTabla"></tbody>
-      </table>
-  </div>
-</div>
+    <!-- 4. BUSCADOR Y TABLA -->
+    <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Buscar libro...">
+        <select id="estanterias"></select>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Código</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoTabla"></tbody>
+        </table>
+    </div>
+</main>
 
 <script>
-// --- LÓGICA DE FUNCIONAMIENTO ---
-const API_URL = "https://script.google.com/macros/s/AKfycbyBLvG-_RfWct0oych5RoIeQAlK-LpC-Xprp9SM4auL2kwMj81vXLpfg7cEsPKDWaOK/exec";
-const tabla = document.getElementById("cuerpoTabla");
-const select = document.getElementById("estanterias");
-const chatInput = document.getElementById("chat-input");
-const micBtn = document.getElementById("mic-btn");
-const searchInput = document.getElementById("searchInput");
-
-let historialChat = [];
-let librosCache = [];
-let fuePorVoz = false;
-
-function toggleTema() {
-    const html = document.documentElement;
-    const btn = document.getElementById("btn-tema");
-    if (html.getAttribute("data-theme") === "dark") {
-        html.removeAttribute("data-theme");
-        localStorage.setItem("tema", "light");
-        btn.innerText = "Modo Oscuro";
-    } else {
-        html.setAttribute("data-theme", "dark");
-        localStorage.setItem("tema", "dark");
-        btn.innerText = "Modo Claro";
-    }
-}
-
-if (localStorage.getItem("tema") === "dark") {
-    document.documentElement.setAttribute("data-theme", "dark");
-    document.getElementById("btn-tema").innerText = "Modo Claro";
-}
-
-async function init() {
-    addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. ¿En qué puedo ayudarte hoy?", true);
-    try {
-        const res = await fetch(`${API_URL}?action=getEstanterias`);
-        const data = await res.json();
-        select.innerHTML = "";
-        data.forEach(e => {
-            const opt = document.createElement("option");
-            opt.value = e; opt.textContent = e;
-            select.appendChild(opt);
-        });
-        cargar(select.value);
-        activarControlesChat();
-        cargarCacheFondo(data);
-    } catch(e) { console.error(e); activarControlesChat(); }
-}
-
-async function cargar(est) {
-    try {
-        const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-        const libros = await res.json();
-        tabla.innerHTML = libros
-            .filter(l => l.titulo && !String(l.titulo).includes("Título"))
-            .map(l => `<tr><td>${l.titulo}</td><td>${l.autor || "Anónimo"}</td><td>${l.id || "N/A"}</td></tr>`)
-            .join("");
-    } catch(e) { tabla.innerHTML = "<tr><td colspan='3'>Error al cargar.</td></tr>"; }
-}
-
-async function cargarCacheFondo(estanterias) {
-    for (let est of estanterias) {
-        const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-        const libros = await res.json();
-        libros.forEach(l => {
-            if(l.titulo && !String(l.titulo).includes("Título")) {
-                librosCache.push({ titulo: String(l.titulo), autor: String(l.autor || "Anónimo"), id: String(l.id || "N/A"), estanteria: est });
-            }
-        });
-    }
-}
-
-searchInput.onkeyup = function() {
-    const v = this.value.toLowerCase().trim();
-    if (v === "") { cargar(select.value); return; }
-    const resultados = librosCache.filter(l => l.titulo.toLowerCase().includes(v) || l.autor.toLowerCase().includes(v));
-    tabla.innerHTML = resultados.map(l => `<tr><td>${l.titulo}</td><td>${l.autor}</td><td>${l.id}</td></tr>`).join("");
-};
-
-select.onchange = () => { searchInput.value = ""; cargar(select.value); };
-
-// --- CHAT Y VOZ ---
-async function handleSend() {
-    const text = chatInput.value.trim();
-    if(!text) return;
-    addMsg("user-msg", text);
-    chatInput.value = "";
-    desactivarControlesChat();
-    historialChat.push({ role: "user", parts: [{ text: text }] });
-    const loadingId = "carga-" + Date.now();
-    addMsg("ai-msg", "Escribiendo...", false, loadingId);
-
-    try {
-        const res = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ historial: historialChat.slice(-10) })
-        });
-        const data = await res.json();
-        document.getElementById(loadingId).remove();
-        if(data.reply) {
-            addMsg("ai-msg", data.reply, true);
-            historialChat.push({ role: "model", parts: [{ text: data.reply }] });
-            if (fuePorVoz) { leerVozAlta(data.reply); fuePorVoz = false; }
-        }
-    } catch(e) { document.getElementById(loadingId).remove(); addMsg("ai-msg", "Error de conexión."); }
-    activarControlesChat();
-}
-
-function addMsg(tipo, texto, altavoz = false, id = null) {
-    const d = document.createElement("div");
-    d.className = "msg " + tipo;
-    if (id) d.id = id;
-    d.innerHTML = `<span class="texto-msg">${texto}</span>`;
-    if (altavoz && tipo === "ai-msg") {
-        const a = document.createElement("span");
-        a.innerHTML = " 🔊"; a.style.cursor="pointer";
-        a.onclick = () => leerVozAlta(texto);
-        d.appendChild(a);
-    }
-    const container = document.getElementById("chat-messages");
-    container.appendChild(d);
-    container.scrollTop = container.scrollHeight;
-}
-
-function leerVozAlta(t) {
-    const v = new SpeechSynthesisUtterance(t);
-    v.lang = 'es-ES';
-    window.speechSynthesis.speak(v);
-}
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (SpeechRecognition) {
-    const rec = new SpeechRecognition();
-    rec.lang = 'es-ES';
-    rec.onresult = (e) => { chatInput.value = e.results[0][0].transcript; fuePorVoz = true; handleSend(); };
-    rec.onend = () => micBtn.style.background = "";
-    function iniciarVoz() { micBtn.style.background = "#ff4d4d"; rec.start(); }
-}
-
-function activarControlesChat() { chatInput.disabled = false; micBtn.disabled = false; }
-function desactivarControlesChat() { chatInput.disabled = true; micBtn.disabled = true; }
-
-chatInput.onkeypress = (e) => { if (e.key === "Enter") handleSend(); };
-init();
+// Mantén aquí toda tu lógica de JavaScript (API_URL, init, handleSend, etc.)
+// Asegúrate de que este bloque de script sea idéntico en todas tus páginas para que la IA funcione en todas.
 </script>
 </body>
 </html>
