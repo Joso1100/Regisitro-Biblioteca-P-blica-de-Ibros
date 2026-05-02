@@ -2,112 +2,107 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- FAVICONS PARA LA BARRA DE PESTAÑAS Y APP -->
 <link rel="icon" type="image/png" href="gemini190px.png">
+<link rel="icon" type="image/png" sizes="512x512" href="gemini512px.png">
 <link rel="apple-touch-icon" href="gemini512px.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#444444">
 
 <title>Acerca de - Biblioteca Pública de Ibros</title>
 
 <style>
 :root {
-  --bg: #ffffff;
-  --text: #222222;
-  --border: #dddddd;
+  --bg: #fff;
+  --text: #222;
+  --border: #ddd;
   --input-bg: #f5f5f5;
   --sidebar: #f0f0f0;
-  --accent: #2e7d32;
-  --card-shadow: rgba(0,0,0,0.1);
+  --accent: #2e7d32; 
 }
 [data-theme="dark"] {
   --bg: #1a1a1a;
-  --text: #eeeeee;
-  --border: #444444;
+  --text: #eee;
+  --border: #444;
   --input-bg: #2a2a2a;
   --sidebar: #2d2d2d;
-  --card-shadow: rgba(0,0,0,0.4);
 }
 body {
   margin: 0;
-  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   display: flex;
+  flex-direction: column; /* Diseño consistente con la página principal */
   transition: background 0.3s, color 0.3s;
 }
 
-/* --- DISEÑO DESKTOP (PC) --- */
-.sidebar {
-  width: 280px;
-  height: 100vh;
+/* MENÚ SUPERIOR HORIZONTAL */
+.nav-container {
+  width: 100%;
   background: var(--sidebar);
-  position: fixed;
-  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+  z-index: 1000;
   display: flex;
-  flex-direction: column;
-  z-index: 100;
+  justify-content: center;
 }
 
-.sidebar-content { padding: 40px 20px; text-align: center; }
+#menu-lateral {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
 
-#menu-lateral { display: flex; flex-direction: column; gap: 15px; }
 .menu-link {
+  padding: 8px 15px;
   color: var(--text);
   text-decoration: none;
-  font-weight: bold;
-  padding: 10px;
-  border-radius: 8px;
-  transition: 0.2s;
   font-size: 16px;
+  font-weight: bold;
 }
-.menu-link:hover { background: var(--input-bg); color: var(--accent); }
+.menu-link:hover { opacity: 0.6; text-decoration: underline; }
 
 /* ÁREA PRINCIPAL */
 .main {
-  margin-left: 280px;
-  width: calc(100% - 280px);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-/* BOTÓN TEMA */
-.btn-tema { 
-  position: absolute; 
-  top: 20px; 
-  right: 20px; 
-  z-index: 1000; 
-  padding: 10px 15px; 
-  border-radius: 20px; 
-  border: 1px solid var(--border); 
-  background: var(--input-bg); 
-  color: var(--text); 
-  cursor: pointer; 
+.btn-oscuro {
+  align-self: flex-end;
+  padding: 10px 15px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
   font-weight: bold;
-  font-size: 14px; 
-  transition: 0.3s;
+  margin-bottom: 20px;
 }
 
 /* TARJETA ACERCA DE */
 .card {
     width: 100%;
-    max-width: 900px;
     background: var(--bg);
     border: 1px solid var(--border);
     padding: 40px;
-    border-radius: 24px;
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 15px 35px var(--card-shadow);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     box-sizing: border-box;
 }
 
-/* CONTENEDOR FLEX PARA DIVIDIR ESCUDOS Y TEXTO */
+/* NUEVO CONTENEDOR FLEX PARA DIVIDIR ESCUDOS Y TEXTO */
 .content-wrapper {
     display: flex;
     align-items: center;
@@ -118,7 +113,7 @@ body {
 
 /* COLUMNAS LATERALES (Para los escudos) */
 .side-logo {
-    flex: 0 0 120px;
+    flex: 0 0 120px; /* Ancho fijo para mantener la simetría */
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -175,56 +170,36 @@ p {
 }
 .btn-back:hover { transform: scale(1.05); }
 
-/* --- OPTIMIZACIÓN MÓVIL --- */
+/* MÓVIL */
 @media (max-width: 768px) {
-  body { flex-direction: column; padding-bottom: 80px; }
-  
-  /* Ocultar barra lateral de PC */
-  .sidebar { display: none; }
-
-  .main { margin-left: 0; width: 100%; padding: 60px 20px 20px 20px; }
-  
-  .card { padding: 25px; border-radius: 20px; }
-  
   .content-wrapper { flex-direction: column; }
   
-  /* Escudos se apilan arriba y abajo en móvil */
+  /* En móvil, los escudos se apilan arriba y abajo para que el texto no se aplaste */
   .side-logo { flex-direction: row; flex: auto; width: auto; justify-content: center; }
-  .side-logo img { height: 70px; width: auto; max-height: 70px; }
+  .side-logo img { height: 70px; width: auto; }
   
   .left-logo { order: 1; margin-bottom: 15px; }
   .text-content { order: 2; }
   .right-logo { order: 3; margin-top: 15px; }
   
+  .card { padding: 25px; }
   h1 { font-size: 22px; }
-
-  /* Barra navegación inferior solo en móvil */
-  .bottom-nav {
-      display: flex !important;
-      position: fixed; bottom: 0; width: 100%;
-      background: var(--sidebar); border-top: 1px solid var(--border);
-      justify-content: space-around; padding: 10px 0; z-index: 200;
-  }
 }
-
-.bottom-nav { display: none; }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR (PC) -->
-<div class="sidebar">
-    <div class="sidebar-content">
-        <nav id="menu-lateral">
-            <a href="index.html" class="menu-link">Inicio</a>
-            <a href="acerca-de.html" class="menu-link" style="color:var(--accent)">Acerca de</a>
-            <a href="descargar-app.html" class="menu-link">Descargar</a>
-        </nav>
-    </div>
-</div>
+<!-- MENÚ SUPERIOR (Igual que en el inicio) -->
+<header class="nav-container">
+    <nav id="menu-lateral">
+        <a href="index.html" class="menu-link">Inicio</a>
+        <a href="acerca de.html" class="menu-link">Acerca de</a>
+        <a href="descargar app.html" class="menu-link">App</a>
+    </nav>
+</header>
 
-<div class="main">
-  <button id="btn-tema" class="btn-tema" onclick="toggleTema()">🌙 Modo</button>
+<main class="main">
+  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
 
   <div class="card">
     <!-- CONTENEDOR CON TRES COLUMNAS -->
@@ -266,27 +241,40 @@ p {
 
     <a href="index.html" class="btn-back">← Volver al Registro</a>
   </div>
-</div>
-
-<!-- NAVEGACIÓN MÓVIL (Solo visible en pantallas pequeñas) -->
-<nav class="bottom-nav">
-    <a href="index.html" class="menu-link">🏠 Inicio</a>
-    <a href="acerca-de.html" class="menu-link" style="color:var(--accent)">📖 Acerca de</a>
-    <a href="descargar-app.html" class="menu-link">📲 Descargar</a>
-</nav>
+</main>
 
 <script>
+// --- LÓGICA DE TEMA (Sincronizada con index.html) ---
 function toggleTema() {
     const html = document.documentElement;
-    const isDark = html.getAttribute("data-theme") === "dark";
-    isDark ? html.removeAttribute("data-theme") : html.setAttribute("data-theme", "dark");
-    localStorage.setItem("tema", isDark ? "light" : "dark");
+    const btn = document.getElementById("btn-tema");
+    
+    if (html.getAttribute("data-theme") === "dark") {
+        html.removeAttribute("data-theme");
+        localStorage.setItem("tema", "light");
+        btn.innerText = "Modo Oscuro";
+    } else {
+        html.setAttribute("data-theme", "dark");
+        localStorage.setItem("tema", "dark");
+        btn.innerText = "Modo Claro";
+    }
 }
 
-if (localStorage.getItem("tema") === "dark") document.documentElement.setAttribute("data-theme", "dark");
+function aplicarTemaAlCargar() {
+    const temaGuardado = localStorage.getItem("tema");
+    if (temaGuardado === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.getElementById("btn-tema").innerText = "Modo Claro";
+    }
+}
 
+aplicarTemaAlCargar();
+
+// Sincroniza el tema si se cambia desde otra pestaña abierta
 window.addEventListener('storage', (e) => {
-    if (e.key === 'tema') location.reload(); 
+    if (e.key === 'tema') {
+        location.reload(); 
+    }
 });
 </script>
 
