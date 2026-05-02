@@ -632,115 +632,98 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 
 
 
+/* ========================= */
+/* 📱 MÓVIL ESTILO APP PRO */
+/* ========================= */
 @media (max-width: 768px) {
-  /* 1. Configuramos el body para ordenar las piezas */
-  body { 
-    flex-direction: column; 
-    display: flex; 
-    background: var(--bg); 
-  }
 
-  /* 2. BARRA LATERAL (Ahora Menú Superior Horizontal) */
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    background: var(--sidebar);
-    z-index: 100;
-    order: 1; /* PRIMERO: Menú arriba */
-  }
+  /* 1. MAGIA FLEXBOX: Permite mezclar elementos de Sidebar y Main */
+  body { display: flex; flex-direction: column; background: var(--bg); }
+  .sidebar { display: contents; } 
+  .main { display: contents; }
 
+  /* 2. MENÚ LATERAL -> AHORA MENÚ SUPERIOR HORIZONTAL */
   .sidebar-content { 
-    display: flex !important; /* Forzamos que se vea */
-    flex-direction: row; /* En horizontal */
+    display: flex; /* Quitamos el 'display: none' */
+    flex-direction: row; 
     justify-content: center;
+    background: var(--sidebar);
     padding: 10px;
+    order: 1; /* POSICIÓN 1: Arriba del todo */
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--border);
   }
-
-  /* Ocultamos el escudo pequeño de la sidebar para que no estorbe */
-  .sidebar-content img { display: none; } 
-
-  #menu-lateral {
-    flex-direction: row; /* Enlaces uno al lado del otro */
-    gap: 20px;
-    margin-top: 0;
-  }
+  .sidebar-content img { display: none; } /* Ocultar el escudito pequeño del menú en móvil */
+  
+  #menu-lateral { display: flex; flex-direction: row; gap: 15px; margin: 0; }
 
   .menu-link {
-    padding: 10px;
-    font-size: 14px;
+    display: block;
+    padding: 8px 10px;
+    color: var(--text);
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    transition: opacity 0.2s;
   }
+  .menu-link:hover { opacity: 0.6; text-decoration: underline; }
 
-  /* 3. CONTENIDO PRINCIPAL (Donde está el Escudo y Título) */
-  .main { 
-    margin-left: 0; 
-    width: 100%; 
-    padding: 0; 
-    display: flex;
-    flex-direction: column;
-    order: 2; /* SEGUNDO: Escudo y Título */
-  }
-
-  /* Escudo y Título */
+  /* 3. ESCUDO Y TÍTULO */
   .header-container { 
-    order: 1; /* Dentro de 'main', va primero */
+    display: flex;
     flex-direction: column; 
     padding: 20px 15px 0; 
-    margin-top: 0; 
+    min-height: auto; 
+    margin-top: 35px; /* Espacio para que no choque con el botón oscuro */
+    order: 2; /* POSICIÓN 2: Debajo del menú */
+    align-items: center;
   }
+  .header-container img { position: static; width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+  h1 { font-size: 22px; text-align: center; line-height: 1.3; font-weight: 800; margin: 0; }
 
-  .header-container img { 
-    position: static; 
-    width: 100px; 
-    height: 100px; 
-    margin: 0 auto 10px auto; 
-    display: block;
-  }
+  /* BOTÓN MODO OSCURO (Lo bajamos un poquito para que el menú quepa arriba) */
+  .btn-oscuro { top: 60px; right: 15px; padding: 8px 16px; font-size: 13px; border-radius: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: absolute; z-index: 1000; }
 
-  h1 { font-size: 20px; order: 2; }
-
-  /* 4. CHAT DE IA (Ahora debajo del Título) */
+  /* 4. TARJETA DE CHAT DE IA */
   #sidebar-chat {
-    order: 2; /* Dentro de 'sidebar', pero lo movemos al final */
+    order: 3; /* POSICIÓN 3: Debajo del Título */
     height: 380px;
-    margin: 15px; 
-    background: var(--bg);
+    margin: 20px 15px 15px 15px; 
     border: 1px solid var(--border);
     border-radius: 20px;
-  }
-
-  /* Ajustamos la sidebar para que el chat baje */
-  .sidebar {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    background: var(--bg);
     display: flex;
     flex-direction: column;
   }
+  .chat-header { border-radius: 20px 20px 0 0; padding: 15px; font-size: 16px; }
+  .chat-controls { border-radius: 0 0 20px 20px; padding: 12px; }
+  #chat-input { border-radius: 25px; font-size: 15px; padding: 12px 18px; }
+  #mic-btn { width: 45px; height: 45px; font-size: 18px; }
 
-  /* 5. BUSCADOR Y TABLA */
-  .toolbar { 
-    order: 3; /* Debajo del Chat */
-    flex-direction: column; 
-    gap: 12px; 
-    margin: 15px; 
-  }
+  /* 5. BUSCADOR MODERNO */
+  .toolbar { order: 4; /* POSICIÓN 4: Debajo de la IA */ display: flex; flex-direction: column; gap: 12px; margin: 25px 15px; }
+  #searchInput, #estanterias { width: 100%; box-sizing: border-box; padding: 16px 20px; font-size: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
 
-  .table-responsive { 
-    order: 4; /* Al final de todo */
-    padding: 0 15px 30px; 
-  }
-
-  /* Estilos de tabla tipo tarjeta (se mantienen como los tenías) */
-  table { width: 100%; border-collapse: separate; border-spacing: 0 12px; }
-  thead { display: none; }
-  tr { 
-    display: flex; 
-    flex-direction: column; 
-    background: var(--input-bg); 
-    border-radius: 18px; 
-    padding: 15px; 
-    border: 1px solid var(--border);
-  }
+  /* 6. TABLA CONVERTIDA EN TARJETAS */
+  .table-responsive { order: 5; /* POSICIÓN 5: Al final */ padding: 0 15px 30px; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0 12px; margin: 0; }
+  thead { display: none; } 
+  
+  tr { display: flex; flex-direction: column; background: var(--input-bg); border-radius: 18px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); transition: transform 0.2s; }
+  tr:active { transform: scale(0.98); }
+  
+  td { padding: 0; border: none; white-space: normal; overflow: visible; display: flex; flex-direction: column; }
+  td:nth-child(1) { width: 100%; font-weight: 800; font-size: 17px; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+  td:nth-child(2) { width: 100%; color: #666; font-size: 14px; margin-bottom: 6px; flex-direction: row; align-items: center; }
+  td:nth-child(2)::before { content: "👤 Autor: "; font-weight: 600; color: #888; margin-right: 5px; }
+  td:nth-child(3) { width: 100%; color: #888; font-size: 13px; flex-direction: row; align-items: center; }
+  td:nth-child(3)::before { content: "🏷️ Código: "; font-weight: 600; margin-right: 5px; }
+  
+  .ubicacion-tag { display: inline-block; margin-top: 10px; font-size: 12px; padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); width: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
 }
 
 </style>
