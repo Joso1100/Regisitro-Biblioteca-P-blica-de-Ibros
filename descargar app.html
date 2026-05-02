@@ -1,9 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Descargar App - Biblioteca Ibros</title>
+    
+    <!-- FAVICON Y MANIFEST -->
+    <link rel="icon" type="image/png" href="gemini190px.png">
+    <link rel="apple-touch-icon" href="gemini512px.png">
     <link rel="manifest" href="manifest.json">
 
     <style>
@@ -47,7 +52,6 @@
         }
 
         .sidebar-content { padding: 40px 20px; text-align: center; }
-        .sidebar-content img { width: 100px; margin-bottom: 20px; }
 
         #menu-lateral { display: flex; flex-direction: column; gap: 15px; }
         .menu-link {
@@ -125,7 +129,6 @@
                 border-right: none; border-bottom: 1px solid var(--border);
                 padding: 10px 0;
             }
-            .sidebar-content img { display: none; } /* Ocultar logo arriba en móvil */
             #menu-lateral { flex-direction: row; justify-content: space-around; gap: 5px; }
             .menu-link { font-size: 13px; padding: 5px; }
 
@@ -155,7 +158,6 @@
     <!-- SIDEBAR (PC) / MENÚ SUPERIOR (MÓVIL) -->
     <div class="sidebar">
         <div class="sidebar-content">
-            <img src="escudo.png" alt="Logo">
             <nav id="menu-lateral">
                 <a href="index.html" class="menu-link">Inicio</a>
                 <a href="acerca-de.html" class="menu-link">Acerca de</a>
@@ -205,8 +207,8 @@
     <!-- NAVEGACIÓN MÓVIL (Solo visible en pantallas pequeñas) -->
     <nav class="bottom-nav">
         <a href="index.html" class="menu-link">🏠 Inicio</a>
-        <a href="acerca-de.html" class="menu-link">📖 Info</a>
-        <a href="descargar-app.html" class="menu-link">📲 App</a>
+        <a href="acerca-de.html" class="menu-link">📖 Acerca de</a>
+        <a href="descargar-app.html" class="menu-link" style="color:var(--accent)">📲 Descargar</a>
     </nav>
 
     <script>
