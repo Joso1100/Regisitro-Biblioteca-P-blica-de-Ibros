@@ -1,1834 +1,806 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="gemini190px.png">
-
 <link rel="icon" type="image/png" sizes="512x512" href="gemini512px.png">
-
 <link rel="apple-touch-icon" href="gemini512px.png">
-
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#444444">
-
 <title>Registro Biblioteca Pública de Ibros</title>
 
-
-
 <style>
-
 :root {
-
-  --bg: #fff;
-
-  --text: #222;
-
-  --border: #ddd;
-
-  --input-bg: #f5f5f5;
-
-  --sidebar: #f0f0f0;
-
-  --accent: #444; 
-
-  --chat-ai-bg: #e1e1e1;
-
+  --bg: #fff;
+  --text: #222;
+  --border: #ddd;
+  --input-bg: #f5f5f5;
+  --sidebar: #f0f0f0;
+  --accent: #444; 
+  --chat-ai-bg: #e1e1e1;
 }
-
 [data-theme="dark"] {
-
-  --bg: #1a1a1a;
-
-  --text: #eee;
-
-  --border: #444;
-
-  --input-bg: #2a2a2a;
-
-  --sidebar: #2d2d2d;
-
-  --chat-ai-bg: #3d3d3d;
-
+  --bg: #1a1a1a;
+  --text: #eee;
+  --border: #444;
+  --input-bg: #2a2a2a;
+  --sidebar: #2d2d2d;
+  --chat-ai-bg: #3d3d3d;
 }
-
 body {
-
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-
-  background: var(--bg);
-
-  color: var(--text);
-
-  display: flex;
-
-  transition: background 0.3s, color 0.3s;
-
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  transition: background 0.3s, color 0.3s;
 }
-
-
 
 /* SIDEBAR */
-
-/* SIDEBAR (Escritorio - Izquierda) */
 .sidebar {
-
-  width: 280px;
-
-  height: 100vh;
-
-  background: var(--sidebar);
-
-  position: fixed;
-
-  display: flex;
-
-  flex-direction: column;
-
-  border-right: 1px solid var(--border);
-
-  z-index: 100;
-
+  width: 280px;
+  height: 100vh;
+  background: var(--sidebar);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  z-index: 100;
 }
-
-
 
 .sidebar-content {
-
-  padding: 20px;
-
-  text-align: center;
-
-  display: flex;
-
-  flex-direction: column;
-
-  flex-grow: 1;
-
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
-
-
 
 #menu-lateral {
-
-  flex-grow: 1;
-
-  margin-top: 20px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-
+  flex-grow: 1;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-
-
 
 /* ESTILOS DEL MENÚ SIMPLE (SIN RECUADROS) */
-
 .menu-link {
-
-  display: block;
-
-  padding: 8px 10px;
-
-  color: var(--text);
-
-  text-decoration: none;
-
-  background: transparent;
-
-  border: none;
-
-  font-size: 15px;
-
-  font-weight: bold;
-
-  transition: opacity 0.2s;
-
+  display: block;
+  padding: 8px 10px;
+  color: var(--text);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  transition: opacity 0.2s;
 }
-
 .menu-link:hover {
-
-  opacity: 0.6;
-
-  text-decoration: underline;
-
+  opacity: 0.6;
+  text-decoration: underline;
 }
-.menu-link:hover { opacity: 0.6; text-decoration: underline; }
-
-
 
 /* CHAT */
-
-/* CHAT INTEGRADO */
 #sidebar-chat {
-
-  height: 70vh;
-
-  min-height: 420px;
-
-  flex-grow: 1;
-  display: flex;
-
-  flex-direction: column;
-
-  margin: 10px;
-
-  background: var(--bg);
-
-  border: 1px solid var(--border);
-
-  border-radius: 10px;
-
-  overflow: hidden;
-
-  flex-shrink: 0;
-
+  height: 70vh;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
-
-
 
 .chat-header {
-
-  background: var(--input-bg);
-
-  padding: 12px;
-
-  text-align: center;
-
-  font-weight: bold;
-
-  font-size: 15px;
-
-  border-bottom: 1px solid var(--border);
-
-  color: var(--text);
-
-  margin: 0;
-
+  background: var(--input-bg);
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  margin: 0;
 }
-
-
 
 #chat-messages {
-
-  flex-grow: 1;
-
-  overflow-y: auto;
-
-  padding: 10px;
-
-  font-size: 13px;
-
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 13px;
 }
-
 .msg {
-
-  padding: 8px;
-
-  border-radius: 10px;
-
-  margin-bottom: 6px;
-
-  max-width: 85%;
-
-  word-wrap: break-word;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: flex-start;
-
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  max-width: 85%;
+  word-wrap: break-word;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
-
 .msg span.texto-msg {
-
-  flex-grow: 1;
-
+  flex-grow: 1;
 }
-
 .user-msg {
-
-  background: #555;
-
-  color: white;
-
-  margin-left: auto;
-
+  background: #555;
+  color: white;
+  margin-left: auto;
 }
-
 .ai-msg {
-
-  background: var(--chat-ai-bg);
-
+  background: var(--chat-ai-bg);
 }
-
-
 
 .altavoz {
-
-  cursor: pointer;
-
-  margin-left: 8px;
-
-  font-size: 16px;
-
-  opacity: 0.6;
-
-  transition: 0.2s;
-
-  user-select: none;
-
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 16px;
+  opacity: 0.6;
+  transition: 0.2s;
+  user-select: none;
 }
-
 .altavoz:hover {
-
-  opacity: 1;
-
-  transform: scale(1.1);
-
+  opacity: 1;
+  transform: scale(1.1);
 }
-
-
 
 /* CONTROLES DE CHAT */
-.user-msg { background: #555; color: white; margin-left: auto; }
-.ai-msg { background: var(--chat-ai-bg); }
-
 .chat-controls {
-
-  padding: 10px;
-
-  border-top: 1px solid var(--border);
-
-  display: flex;
-
-  gap: 8px;
-
-  align-items: center;
-
+  padding: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
-
 #chat-input {
-
-  flex-grow: 1;
-
-  padding: 10px 15px;
-
-  padding: 10px;
-  border-radius: 20px;
-
-  border: 1px solid var(--border);
-
-  background: var(--input-bg);
-
-  color: var(--text);
-
-  box-sizing: border-box;
-
-  outline: none;
-
+  flex-grow: 1;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  box-sizing: border-box;
+  outline: none;
 }
-
-
 
 #mic-btn {
-
-  cursor: pointer;
-
-  border: 1px solid var(--border);
-
-  border-radius: 50%;
-
-  background: var(--input-bg);
-
-  color: var(--text);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 16px;
-
-  width: 40px;
-
-  height: 40px;
-
-  flex-shrink: 0;
-
-  transition: 0.3s;
-
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--input-bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  transition: 0.3s;
 }
-
 #mic-btn.escuchando {
-
-  background-color: #ff4d4d;
-
-  color: white;
-
-  border-color: #ff4d4d;
-
-  animation: pulso 1.5s infinite;
-
+  background-color: #ff4d4d;
+  color: white;
+  border-color: #ff4d4d;
+  animation: pulso 1.5s infinite;
 }
-
-
 
 @keyframes pulso {
-
-  0% { transform: scale(0.95); }
-
-  50% { transform: scale(1.05); }
-
-  100% { transform: scale(0.95); }
-
-  border: 1px solid var(--border);
-  background: var(--input-bg);
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(0.95); }
 }
-
-
 
 /* MAIN CONTENT AREA */
-
-/* ÁREA PRINCIPAL */
 .main {
-
-  margin-left: 280px; 
-
-  padding: 20px;
-
-  width: calc(100% - 280px);
-
-  box-sizing: border-box;
-
-  position: relative; 
-
-  display: flex;
-  flex-direction: column;
+  margin-left: 280px; 
+  padding: 20px;
+  width: calc(100% - 280px);
+  box-sizing: border-box;
+  position: relative; 
 }
-
-
 
 /* BOTÓN MODO OSCURO (ARRIBA A LA DERECHA) */
-
 .btn-oscuro {
-
-  position: absolute;
-
-  top: 20px;
-
-  right: 20px;
-
-  align-self: flex-end;
-  padding: 10px 15px;
-
-  background: var(--input-bg);
-
-  color: var(--text);
-
-  border: 1px solid var(--border);
-
-  border-radius: 20px;
-
-  cursor: pointer;
-
-  font-weight: bold;
-
-  font-size: 14px;
-
-  transition: 0.3s;
-
-  z-index: 1000;
-
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+  z-index: 1000;
 }
-
 .btn-oscuro:hover {
-
-  background: var(--border);
-
+  background: var(--border);
 }
-
-
 
 /* CONTENEDOR PARA EL TÍTULO Y LA IMAGEN */
-
 .header-container {
-
-  display: flex;
-
-  align-items: center; 
-
-  justify-content: center; 
-
-  position: relative;
-
-  min-height: 250px; 
-
-  margin-top: 20px;
-
-  padding: 0 40px; 
-
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin: 20px 0;
-  gap: 15px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  position: relative;
+  min-height: 250px; 
+  margin-top: 20px;
+  padding: 0 40px; 
 }
-
-
 
 .header-container img {
-
-  position: absolute;
-
-  left: 60px; 
-
-  height: 250px; 
-
-  width: 250px; 
-
-  object-fit: contain; 
-
+  position: absolute;
+  left: 60px; 
+  height: 250px; 
+  width: 250px; 
+  object-fit: contain; 
 }
-
-
 
 h1 {
-
-  text-align: center;
-
-  margin: 0;
-
-  color: var(--text);
-
-  height: 180px;
-  width: auto;
-  object-fit: contain;
+  text-align: center;
+  margin: 0;
+  color: var(--text);
 }
-
-
-h1 { margin: 0; font-size: 24px; }
 
 .toolbar {
-
-  display: flex;
-
-  gap: 15px;
-
-  justify-content: center;
-
-  align-items: center;
-
-  margin: 20px 20px 40px 20px;
-
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 20px 40px 20px;
 }
-
 #searchInput {
-
-  padding: 12px 25px;
-
-  width: 100%;
-
-  max-width: 500px;
-
-  border-radius: 50px;
-
-  border: 1px solid var(--border);
-
-  background: var(--input-bg);
-
-  color: var(--text);
-
-  font-size: 15px;
-
-  outline: none;
-
-  margin: 20px 0;
+  padding: 12px 25px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
 }
-
-
 
 #estanterias {
-
-#searchInput, #estanterias {
-  padding: 12px 20px;
-
-  border-radius: 50px;
-
-  border: 1px solid var(--border);
-
-  background: var(--input-bg);
-
-  color: var(--text);
-
-  font-size: 15px;
-
-  cursor: pointer;
-
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
 }
-
-
 
 /* TABLA ALINEADA A LA IZQUIERDA */
-
 .table-responsive {
-
-  width: 100%;
-
+  width: 100%;
 }
-
-
-.table-responsive { width: 100%; overflow-x: auto; }
 
 table {
-
-  width: 95%;
-
-  margin: auto;
-
-  width: 100%;
-  border-collapse: collapse;
-
-  table-layout: fixed;
-
+  width: 95%;
+  margin: auto;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
-
 th {
-
-th, td {
-  padding: 12px;
-  text-align: left;
-
-  font-weight: bold;
-
-  color: var(--text);
-
-  border-bottom: 2px solid var(--border);
-
+  text-align: left;
+  font-weight: bold;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
 }
-
 td, th {
-
-  padding: 12px 15px;
-
-  border-bottom: 1px solid var(--border);
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-
-
 
 th:nth-child(1), td:nth-child(1) { width: 50%; } 
-
 th:nth-child(2), td:nth-child(2) { width: 30%; } 
-
 th:nth-child(3), td:nth-child(3) { width: 20%; } 
 
-
-
 .ubicacion-tag {
-
-  color: #666;
-
-  font-size: 11px;
-
-  font-weight: bold;
-
-  display: block;
-
-  margin-top: 3px;
-
+  color: #666;
+  font-size: 11px;
+  font-weight: bold;
+  display: block;
+  margin-top: 3px;
 }
-
-
-
 /* ========================= */
-
-/* 📱 MÓVIL ESTILO APP PRO */
-
-/* 📱 DISEÑO MÓVIL (CORREGIDO) */
+/* ? MÓVIL ESTILO APP PRO */
 /* ========================= */
-
 @media (max-width: 768px) {
 
-  body { flex-direction: column; background: var(--bg); }
-
-  .main { margin-left: 0; width: 100%; padding: 0; }
-
-
-
-  /* La barra lateral fluye naturalmente arriba */
-
-  body { flex-direction: column; }
-  
-  .sidebar {
-
-    position: relative;
-
-    width: 100%;
-
-    height: auto;
-
-    border-right: none;
-
-    background: transparent;
-
-    z-index: 10;
-
-    border-bottom: 1px solid var(--border);
-    order: 1; /* Menú arriba */
-  }
-
-  .sidebar-content { display: none; } /* Ocultar menú lateral en móvil para ganar espacio */
-
-
-
-  /* Tarjeta de Chat Premium Integrada */
-
-  #sidebar-chat {
-
-    height: 380px;
-
-    margin: 60px 15px 15px 15px; /* Margen superior para no solapar el botón de modo oscuro */
-
-    border: 1px solid var(--border);
-
-    border-radius: 20px;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-
-    background: var(--bg);
-
-  .sidebar-content img { display: none; }
-  
-  #menu-lateral {
-    flex-direction: row; 
-    justify-content: center;
-    margin-top: 0;
-    padding-bottom: 10px;
-  }
-
-  .chat-header { border-radius: 20px 20px 0 0; padding: 15px; font-size: 16px; }
-
-  .chat-controls { border-radius: 0 0 20px 20px; padding: 12px; }
-
-  #chat-input { border-radius: 25px; font-size: 15px; padding: 12px 18px; }
-
-  #mic-btn { width: 45px; height: 45px; font-size: 18px; }
-
-
-
-  /* Cabecera y Título */
-
-  .header-container { flex-direction: column; padding: 20px 15px 0; min-height: auto; margin-top: 0; }
-
-  .header-container img { position: static; width: 85px; height: 85px; margin-bottom: 15px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-
-  h1 { font-size: 22px; text-align: center; line-height: 1.3; font-weight: 800; }
-
-
-
-  .btn-oscuro { top: 15px; right: 15px; padding: 8px 16px; font-size: 13px; border-radius: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-
-
-
-  /* Buscador Moderno */
-
-  .toolbar { flex-direction: column; gap: 12px; margin: 25px 15px; }
-
-  #searchInput, #estanterias { 
-
-    width: 100%; 
-
-    box-sizing: border-box; 
-
-    padding: 16px 20px; 
-
-    font-size: 15px; 
-
-    border-radius: 18px; 
-
-    border: 1px solid var(--border);
-
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-
-  #sidebar-chat {
-    height: 350px;
-    margin: 10px;
-    order: 3; /* IA después del título */
-  }
-
-
-
-  /* Tabla Convertida en Tarjetas (Diseño App) */
-
-  .table-responsive { padding: 0 15px 30px; }
-
-  table { width: 100%; border-collapse: separate; border-spacing: 0 12px; margin: 0; }
-
-  thead { display: none; } /* Ocultar cabeceras clásicas en móvil */
-
-  
-
-  tr { 
-
-    display: flex; 
-
-    flex-direction: column; 
-
-    background: var(--input-bg); 
-
-    border-radius: 18px; 
-
-    padding: 18px; 
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
-
-    border: 1px solid var(--border);
-
-    transition: transform 0.2s;
-
-  .main {
-    margin-left: 0;
-    width: 100%;
-    order: 2;
-  }
-
-  tr:active { transform: scale(0.98); }
-
-  
-
-  td { padding: 0; border: none; white-space: normal; overflow: visible; display: flex; flex-direction: column; }
-
-  
-
-  /* Título del libro */
-
-  td:nth-child(1) { width: 100%; font-weight: 800; font-size: 17px; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
-
-  
-
-  /* Autor */
-
-  td:nth-child(2) { width: 100%; color: #666; font-size: 14px; margin-bottom: 6px; flex-direction: row; align-items: center; }
-
-  td:nth-child(2)::before { content: "👤 Autor: "; font-weight: 600; color: #888; margin-right: 5px; }
-
-  
-
-  /* Código */
-
-  td:nth-child(3) { width: 100%; color: #888; font-size: 13px; flex-direction: row; align-items: center; }
-
-  td:nth-child(3)::before { content: "🏷️ Código: "; font-weight: 600; margin-right: 5px; }
-
-  
-
-  /* Etiqueta de ubicación */
-
-  .ubicacion-tag { 
-
-    display: inline-block; 
-
-    margin-top: 10px; 
-
-    font-size: 12px; 
-  .header-container { order: 1; margin-top: 10px; }
-  .header-container img { height: 100px; }
-
-    padding: 6px 12px; 
-  .toolbar { order: 4; flex-direction: column; padding: 0 10px; }
-  #searchInput, #estanterias { width: 100%; }
-
-    background: var(--bg); 
-
-    border: 1px solid var(--border);
-
-    border-radius: 12px; 
-
-    color: var(--text); 
-
-    width: fit-content;
-
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-
-  }
-  .table-responsive { order: 5; padding: 10px; }
-
-  /* Estilo tarjetas para tabla móvil */
-  table, thead, tbody, th, td, tr { display: block; }
-  thead { display: none; }
-  tr { margin-bottom: 15px; background: var(--input-bg); border-radius: 10px; padding: 10px; border: 1px solid var(--border); }
-  td { border: none; padding: 5px 0; font-size: 14px; }
-  td:nth-of-type(1) { font-weight: bold; font-size: 16px; }
-  td:nth-of-type(2):before { content: "Autor: "; color: #888; }
-  td:nth-of-type(3):before { content: "Código: "; color: #888; }
+  /* Layout base */
+  body {
+    flex-direction: column;
+  }
+
+  .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+  }
+
+  /* Ocultamos sidebar clásica */
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    z-index: 1000;
+  }
+
+  .sidebar-content {
+    display: none; /* ocultamos menú */
+  }
+
+  /* ===================== */
+  /* ? CHAT TIPO APP */
+  /* ===================== */
+  #sidebar-chat {
+    height: 60px;
+    min-height: unset;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    transition: height 0.3s ease;
+  }
+
+  /* Cuando el usuario toca el input (abre chat) */
+  #sidebar-chat:focus-within {
+    height: 60vh;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+  }
+
+  .chat-header {
+    font-size: 13px;
+    padding: 8px;
+    text-align: left;
+  }
+
+  #chat-messages {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .msg {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  /* Input bonito tipo app */
+  .chat-controls {
+    padding: 8px;
+    background: var(--bg);
+  }
+
+  #chat-input {
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 25px;
+  }
+
+  #mic-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+  }
+
+  /* ===================== */
+  /* ? BUSCADOR PRO */
+  /* ===================== */
+  .toolbar {
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
+  }
+
+  #searchInput {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  #estanterias {
+    width: 100%;
+  }
+
+  /* ===================== */
+  /* ? TABLA COMPACTA */
+  /* ===================== */
+  table {
+    width: 100%;
+    font-size: 13px;
+  }
+
+  td, th {
+    padding: 8px;
+  }
+
+  th:nth-child(1), td:nth-child(1) { width: 45%; }
+  th:nth-child(2), td:nth-child(2) { width: 30%; }
+  th:nth-child(3), td:nth-child(3) { width: 25%; }
+
+  /* ===================== */
+  /* ? BOTÓN IA (VISUAL) */
+  /* ===================== */
+  #sidebar-chat::before {
+    content: "? IA";
+    position: absolute;
+    top: -40px;
+    right: 15px;
+    background: #444;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+
+  /* ===================== */
+  /* HEADER MÁS LIMPIO */
+  /* ===================== */
+  .header-container {
+    flex-direction: column;
+    padding: 0;
+    min-height: unset;
+  }
+
+  .header-container img {
+    position: static;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  /* Botón oscuro pequeño */
+  .btn-oscuro {
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 }
 
 </style>
-
 </head>
-
-
 
 <body>
 
-
-
 <div class="sidebar">
+  <div class="sidebar-content">
+      <img src="escudo.png" style="width:90px; margin: 0 auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
+      
+      <nav id="menu-lateral">
+          <a href="index.html" class="menu-link">Inicio</a>
+          <a href="acerca de.html" class="menu-link">Acerca de</a>
+          <a href="descargar app.html" class="menu-link">Descargar App</a>
+      </nav>
+  </div>
 
-  <div class="sidebar-content">
-
-      <img src="escudo.png" style="width:90px; margin: 0 auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
-
-      
-
-      <nav id="menu-lateral">
-
-          <a href="index.html" class="menu-link">Inicio</a>
-
-          <a href="acerca de.html" class="menu-link">Acerca de</a>
-
-          <a href="descargar app.html" class="menu-link">Descargar App</a>
-
-          <a href="descargar app.html" class="menu-link">App</a>
-      </nav>
-
-  </div>
-
-
-
-  <div id="sidebar-chat">
-
-      <div class="chat-header">Bibliotecario Digital</div>
-
-      <div id="chat-messages"></div>
-
-      <div class="chat-controls">
-
-          <input id="chat-input" placeholder="Escribe tu mensaje..." disabled>
-
-          <button id="mic-btn" onclick="iniciarVoz()" title="Hablar por micrófono" disabled>🎙️</button>
-
-          <input id="chat-input" placeholder="Pregúntame algo..." disabled>
-          <button id="mic-btn" onclick="iniciarVoz()" disabled>🎙️</button>
-      </div>
-
-  </div>
-
+  <div id="sidebar-chat">
+      <div class="chat-header">Bibliotecario Digital</div>
+      <div id="chat-messages"></div>
+      <div class="chat-controls">
+          <input id="chat-input" placeholder="Escribe tu mensaje..." disabled>
+          <button id="mic-btn" onclick="iniciarVoz()" title="Hablar por micrófono" disabled>?￯ﾸﾏ</button>
+      </div>
+  </div>
 </div>
-
-
 
 <div class="main">
+  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
+  
+  <div class="header-container">
+      <img src="640px-Escudo_de_Ibros_(Jaén).svg.png">
+      <h1>Registro Biblioteca Pública de Ibros</h1>
+  </div>
 
-  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
+  <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="Busca por nombre, autor o código...">
+      <select id="estanterias"></select>
+  </div>
 
-
-
-  <div class="header-container">
-
-      <img src="640px-Escudo_de_Ibros_(Jaén).svg.png">
-
-      <img src="640px-Escudo_de_Ibros_(Jaén).svg.png" alt="Escudo de Ibros">
-      <h1>Registro Biblioteca Pública de Ibros</h1>
-
-  </div>
-
-
-
-  <div class="toolbar">
-
-      <input type="text" id="searchInput" placeholder="Busca por nombre, autor o código...">
-
-      <input type="text" id="searchInput" placeholder="Buscar por título, autor...">
-      <select id="estanterias"></select>
-
-  </div>
-
-
-
-  <div class="table-responsive">
-
-      <table>
-
-          <thead>
-
-              <tr>
-
-                  <th>Título</th>
-
-                  <th>Autor</th>
-
-                  <th>Código</th>
-
-              </tr>
-
-          </thead>
-
-          <tbody id="cuerpoTabla"></tbody>
-
-      </table>
-
-  </div>
-
+  <div class="table-responsive">
+      <table>
+          <thead>
+              <tr>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Código</th>
+              </tr>
+          </thead>
+          <tbody id="cuerpoTabla"></tbody>
+      </table>
+  </div>
 </div>
 
-
-
 <script>
-// --- LÓGICA DE FUNCIONAMIENTO ---
-const API_URL = "https://script.google.com/macros/s/AKfycbyBLvG-_RfWct0oych5RoIeQAlK-LpC-Xprp9SM4auL2kwMj81vXLpfg7cEsPKDWaOK/exec";
-const tabla = document.getElementById("cuerpoTabla");
-const select = document.getElementById("estanterias");
-const chatInput = document.getElementById("chat-input");
-const micBtn = document.getElementById("mic-btn");
-const searchInput = document.getElementById("searchInput");
-
 // --- LÓGICA DEL MODO OSCURO ---
-let historialChat = [];
-let librosCache = [];
-let fuePorVoz = false;
-
 function toggleTema() {
-
-    const html = document.documentElement;
-
-    const btn = document.getElementById("btn-tema");
-
-    
-
-    if (html.getAttribute("data-theme") === "dark") {
-
-        html.removeAttribute("data-theme");
-
-        localStorage.setItem("tema", "light");
-
-        btn.innerText = "Modo Oscuro";
-
-    } else {
-
-        html.setAttribute("data-theme", "dark");
-
-        localStorage.setItem("tema", "dark");
-
-        btn.innerText = "Modo Claro";
-
-    }
-
+    const html = document.documentElement;
+    const btn = document.getElementById("btn-tema");
+    
+    if (html.getAttribute("data-theme") === "dark") {
+        html.removeAttribute("data-theme");
+        localStorage.setItem("tema", "light");
+        btn.innerText = "Modo Oscuro";
+    } else {
+        html.setAttribute("data-theme", "dark");
+        localStorage.setItem("tema", "dark");
+        btn.innerText = "Modo Claro";
+    }
 }
-
-
 
 // Cargar preferencia al iniciar
-
 if (localStorage.getItem("tema") === "dark") {
-
-    document.documentElement.setAttribute("data-theme", "dark");
-
-    document.getElementById("btn-tema").innerText = "Modo Claro";
-
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.getElementById("btn-tema").innerText = "Modo Claro";
 }
-
 // ------------------------------
-
-
 
 const API_URL = "https://script.google.com/macros/s/AKfycbyBLvG-_RfWct0oych5RoIeQAlK-LpC-Xprp9SM4auL2kwMj81vXLpfg7cEsPKDWaOK/exec";
 
-
-
 const tabla = document.getElementById("cuerpoTabla");
-
 const select = document.getElementById("estanterias");
-
 const chatInput = document.getElementById("chat-input");
-
 const micBtn = document.getElementById("mic-btn");
-
 const searchInput = document.getElementById("searchInput");
 
-
-
 let historialChat = [];
-
 let librosCache = []; 
-
 let fuePorVoz = false; 
 
-
-
 async function init() {
-
-  addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte recomendaciones o ayudarte a buscar. ¿Qué te apetece leer hoy?", true);
-
-  
-
-  try {
-
-      const res = await fetch(`${API_URL}?action=getEstanterias`);
-
-      const data = await res.json();
-
-      select.innerHTML = "";
-
-      data.forEach(e => {
-
-          const opt = document.createElement("option");
-
-          opt.value = e; 
-
-          opt.textContent = e;
-
-          select.appendChild(opt);
-
-      });
-
-      cargar(select.value);
-
-      activarControlesChat();
-
-      cargarCacheFondo(data);
-
-  } catch(e) {
-
-      console.error("Error durante la inicialización:", e);
-
-      activarControlesChat();
-
-  }
-
-    addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. ¿En qué puedo ayudarte hoy?", true);
-    try {
-        const res = await fetch(`${API_URL}?action=getEstanterias`);
-        const data = await res.json();
-        select.innerHTML = "";
-        data.forEach(e => {
-            const opt = document.createElement("option");
-            opt.value = e; opt.textContent = e;
-            select.appendChild(opt);
-        });
-        cargar(select.value);
-        activarControlesChat();
-        cargarCacheFondo(data);
-    } catch(e) { console.error(e); activarControlesChat(); }
+  addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte recomendaciones o ayudarte a buscar. ¿Qué te apetece leer hoy?", true);
+  
+  try {
+      const res = await fetch(`${API_URL}?action=getEstanterias`);
+      const data = await res.json();
+      select.innerHTML = "";
+      data.forEach(e => {
+          const opt = document.createElement("option");
+          opt.value = e; 
+          opt.textContent = e;
+          select.appendChild(opt);
+      });
+      cargar(select.value);
+      activarControlesChat();
+      cargarCacheFondo(data);
+  } catch(e) {
+      console.error("Error durante la inicialización:", e);
+      activarControlesChat();
+  }
 }
-
-
 
 select.onchange = () => { 
-
-    searchInput.value = ""; 
-
-    cargar(select.value);
-
+    searchInput.value = ""; 
+    cargar(select.value);
 };
 
-
-
 async function cargarCacheFondo(estanterias) {
-
-  for (let est of estanterias) {
-
-      try {
-
-          const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-
-          const libros = await res.json();
-
-          libros.forEach(l => {
-
-              if(l.titulo && !String(l.titulo).includes("Título")) {
-
-                  librosCache.push({
-
-                      titulo: String(l.titulo),
-
-                      autor: String(l.autor || "Anónimo"),
-
-                      id: String(l.id || "N/A"),
-
-                      estanteria: est 
-
-                  });
-
-              }
-
-          });
-
-      } catch(e) {
-
-          console.warn(`Error cargando caché para estantería ${est}:`, e);
-
-      }
-
-  }
-
+  for (let est of estanterias) {
+      try {
+          const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
+          const libros = await res.json();
+          libros.forEach(l => {
+              if(l.titulo && !String(l.titulo).includes("Título")) {
+                  librosCache.push({
+                      titulo: String(l.titulo),
+                      autor: String(l.autor || "Anónimo"),
+                      id: String(l.id || "N/A"),
+                      estanteria: est 
+                  });
+              }
+          });
+      } catch(e) {
+          console.warn(`Error cargando caché para estantería ${est}:`, e);
+      }
+  }
 }
-
-
 
 async function cargar(est) {
-
-  try {
-
-      const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-
-      const libros = await res.json();
-
-      tabla.innerHTML = libros
-
-          .filter(l => l.titulo && !String(l.titulo).includes("Título"))
-
-          .map(l => `<tr><td>${l.titulo}</td><td>${l.autor || "Anónimo"}</td><td>${l.id || "N/A"}</td></tr>`)
-
-          .join("");
-
-  } catch(e) {
-
-      console.error(`Error cargando libros de ${est}:`, e);
-
-      tabla.innerHTML = "<tr><td colspan='3'>Error cargando datos.</td></tr>";
-
-  }
-
-    try {
-        const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-        const libros = await res.json();
-        tabla.innerHTML = libros
-            .filter(l => l.titulo && !String(l.titulo).includes("Título"))
-            .map(l => `<tr><td>${l.titulo}</td><td>${l.autor || "Anónimo"}</td><td>${l.id || "N/A"}</td></tr>`)
-            .join("");
-    } catch(e) { tabla.innerHTML = "<tr><td colspan='3'>Error al cargar.</td></tr>"; }
+  try {
+      const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
+      const libros = await res.json();
+      tabla.innerHTML = libros
+          .filter(l => l.titulo && !String(l.titulo).includes("Título"))
+          .map(l => `<tr><td>${l.titulo}</td><td>${l.autor || "Anónimo"}</td><td>${l.id || "N/A"}</td></tr>`)
+          .join("");
+  } catch(e) {
+      console.error(`Error cargando libros de ${est}:`, e);
+      tabla.innerHTML = "<tr><td colspan='3'>Error cargando datos.</td></tr>";
+  }
 }
-
-
 
 let temporizadorBuscador;
-async function cargarCacheFondo(estanterias) {
-    for (let est of estanterias) {
-        const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-        const libros = await res.json();
-        libros.forEach(l => {
-            if(l.titulo && !String(l.titulo).includes("Título")) {
-                librosCache.push({ titulo: String(l.titulo), autor: String(l.autor || "Anónimo"), id: String(l.id || "N/A"), estanteria: est });
-            }
-        });
-    }
-}
-
 searchInput.onkeyup = function() {
-
-  clearTimeout(temporizadorBuscador); 
-
-  const v = this.value.toLowerCase().trim();
-
-  temporizadorBuscador = setTimeout(() => {
-
-      if (v === "") { 
-
-          cargar(select.value); 
-
-          return;
-
-      }
-
-      const resultados = librosCache.filter(l => 
-
-          l.titulo.toLowerCase().includes(v) || 
-
-          l.autor.toLowerCase().includes(v) ||
-
-          l.id.toLowerCase().includes(v)
-
-      );
-
-      tabla.innerHTML = resultados.map(l => `<tr>
-
-          <td>${l.titulo} <span class="ubicacion-tag">📍 ${l.estanteria}</span></td>
-
-          <td>${l.autor}</td>
-
-          <td>${l.id}</td>
-
-      </tr>`).join("");
-
-  }, 300); 
-
-    const v = this.value.toLowerCase().trim();
-    if (v === "") { cargar(select.value); return; }
-    const resultados = librosCache.filter(l => l.titulo.toLowerCase().includes(v) || l.autor.toLowerCase().includes(v));
-    tabla.innerHTML = resultados.map(l => `<tr><td>${l.titulo}</td><td>${l.autor}</td><td>${l.id}</td></tr>`).join("");
+  clearTimeout(temporizadorBuscador); 
+  const v = this.value.toLowerCase().trim();
+  temporizadorBuscador = setTimeout(() => {
+      if (v === "") { 
+          cargar(select.value); 
+          return;
+      }
+      const resultados = librosCache.filter(l => 
+          l.titulo.toLowerCase().includes(v) || 
+          l.autor.toLowerCase().includes(v) ||
+          l.id.toLowerCase().includes(v)
+      );
+      tabla.innerHTML = resultados.map(l => `<tr>
+          <td>${l.titulo} <span class="ubicacion-tag">? ${l.estanteria}</span></td>
+          <td>${l.autor}</td>
+          <td>${l.id}</td>
+      </tr>`).join("");
+  }, 300); 
 };
 
-select.onchange = () => { searchInput.value = ""; cargar(select.value); };
-
-
 function leerVozAlta(texto) {
-
-  if ('speechSynthesis' in window) {
-
-      window.speechSynthesis.cancel(); 
-
-      const voz = new SpeechSynthesisUtterance(texto);
-
-      voz.lang = 'es-ES'; 
-
-      voz.rate = 1.0; 
-
-      window.speechSynthesis.speak(voz);
-
-  } else {
-
-      console.warn("La síntesis de voz no está soportada en este navegador.");
-
-  }
-
+  if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); 
+      const voz = new SpeechSynthesisUtterance(texto);
+      voz.lang = 'es-ES'; 
+      voz.rate = 1.0; 
+      window.speechSynthesis.speak(voz);
+  } else {
+      console.warn("La síntesis de voz no está soportada en este navegador.");
+  }
 }
-
-
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
 let reconocimientoVoz;
-
 if (SpeechRecognition) {
+  reconocimientoVoz = new SpeechRecognition();
+  reconocimientoVoz.lang = 'es-ES';
+  reconocimientoVoz.continuous = false;
+  reconocimientoVoz.interimResults = false;
 
-  reconocimientoVoz = new SpeechRecognition();
-
-  reconocimientoVoz.lang = 'es-ES';
-
-  reconocimientoVoz.continuous = false;
-
-  reconocimientoVoz.interimResults = false;
-
-
-
-  reconocimientoVoz.onstart = () => { 
-
-      micBtn.classList.add("escuchando"); 
-
-      chatInput.placeholder = "Escuchando...";
-
-      desactivarControlesChat(); 
-
-  };
-
-  reconocimientoVoz.onresult = (e) => { 
-
-      const transcript = e.results[0][0].transcript;
-
-      chatInput.value = transcript;
-
-      fuePorVoz = true; 
-
-      handleSend(); 
-
-  };
-
-  reconocimientoVoz.onerror = (e) => {
-
-      console.error("Error de reconocimiento de voz:", e);
-
-      restaurarInterfazVoz();
-
-  };
-
-  reconocimientoVoz.onend = () => restaurarInterfazVoz();
-
+  reconocimientoVoz.onstart = () => { 
+      micBtn.classList.add("escuchando"); 
+      chatInput.placeholder = "Escuchando...";
+      desactivarControlesChat(); 
+  };
+  reconocimientoVoz.onresult = (e) => { 
+      const transcript = e.results[0][0].transcript;
+      chatInput.value = transcript;
+      fuePorVoz = true; 
+      handleSend(); 
+  };
+  reconocimientoVoz.onerror = (e) => {
+      console.error("Error de reconocimiento de voz:", e);
+      restaurarInterfazVoz();
+  };
+  reconocimientoVoz.onend = () => restaurarInterfazVoz();
 } else {
-
-    micBtn.style.display = 'none'; 
-
-    console.warn("El reconocimiento de voz no está soportado en este navegador.");
-
+    micBtn.style.display = 'none'; 
+    console.warn("El reconocimiento de voz no está soportado en este navegador.");
 }
-
-
 
 function iniciarVoz() { 
-
-    if (reconocimientoVoz) reconocimientoVoz.start();
-
+    if (reconocimientoVoz) reconocimientoVoz.start();
 }
-
 function restaurarInterfazVoz() { 
-
-    micBtn.classList.remove("escuchando"); 
-
-    chatInput.placeholder = "Escribe..."; 
-
-    chatInput.disabled = false; 
-
-    micBtn.disabled = false;
-
-    chatInput.focus();
-
+    micBtn.classList.remove("escuchando"); 
+    chatInput.placeholder = "Escribe..."; 
+    chatInput.disabled = false; 
+    micBtn.disabled = false;
+    chatInput.focus();
 }
-
 function activarControlesChat() { 
-
-    chatInput.disabled = false; 
-
-    micBtn.disabled = false;
-
+    chatInput.disabled = false; 
+    micBtn.disabled = false;
 }
-
 function desactivarControlesChat() { 
-
-    chatInput.disabled = true; 
-
-    micBtn.disabled = true;
-
+    chatInput.disabled = true; 
+    micBtn.disabled = true;
 }
 
-
-
-// --- CHAT Y VOZ ---
 async function handleSend() {
+  const text = chatInput.value.trim();
+  if(!text) return;
+  
+  addMsg("user-msg", text, false);
+  chatInput.value = "";
+  desactivarControlesChat();
+  
+  historialChat.push({ role: "user", parts: [{ text: text }] });
 
-  const text = chatInput.value.trim();
+  const loadingId = "carga-" + Date.now();
+  addMsg("ai-msg", "Escribiendo...", false, loadingId);
 
-  if(!text) return;
+  try {
+      // Llamada a tu función de Vercel
+      const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ historial: historialChat.slice(-10) })
+      });
 
-  
+      const data = await res.json();
+      
+      // Eliminamos el mensaje de "Escribiendo..."
+      if(document.getElementById(loadingId)) document.getElementById(loadingId).remove(); 
 
-  addMsg("user-msg", text, false);
-
-  chatInput.value = "";
-
-  desactivarControlesChat();
-
-  
-
-  historialChat.push({ role: "user", parts: [{ text: text }] });
-
-
-
-  const loadingId = "carga-" + Date.now();
-
-  addMsg("ai-msg", "Escribiendo...", false, loadingId);
-
-
-
-  try {
-
-      // Llamada a tu función de Vercel
-
-      const res = await fetch("/api/chat", {
-
-          method: "POST",
-
-          headers: { "Content-Type": "application/json" },
-
-          body: JSON.stringify({ historial: historialChat.slice(-10) })
-
-      });
-
-
-
-      const data = await res.json();
-
-      
-
-      // Eliminamos el mensaje de "Escribiendo..."
-
-      if(document.getElementById(loadingId)) document.getElementById(loadingId).remove(); 
-
-
-
-      // Cambiamos la lógica para leer 'data.reply' que es lo que envía tu nuevo chat.js
-
-      if(data.reply) {
-
-          const respuestaIA = data.reply;
-
-          addMsg("ai-msg", respuestaIA, true); 
-
-          historialChat.push({ role: "model", parts: [{ text: respuestaIA }] });
-
-          
-
-          if (fuePorVoz) { 
-
-              leerVozAlta(respuestaIA); 
-
-              fuePorVoz = false; 
-
-          }
-
-      } else {
-
-          addMsg("ai-msg", "Lo siento, no he podido procesar eso. ¿Puedes repetirlo?", true);
-
-      }
-
-  } catch(e) {
-
-      console.error("Error de conexión:", e);
-
-      if(document.getElementById(loadingId)) document.getElementById(loadingId).remove();
-
-      addMsg("ai-msg", "Error de conexión con el servidor de la biblioteca.", true);
-
-  } finally { 
-
-      activarControlesChat();
-
-  }
-
-    const text = chatInput.value.trim();
-    if(!text) return;
-    addMsg("user-msg", text);
-    chatInput.value = "";
-    desactivarControlesChat();
-    historialChat.push({ role: "user", parts: [{ text: text }] });
-    const loadingId = "carga-" + Date.now();
-    addMsg("ai-msg", "Escribiendo...", false, loadingId);
-
-    try {
-        const res = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ historial: historialChat.slice(-10) })
-        });
-        const data = await res.json();
-        document.getElementById(loadingId).remove();
-        if(data.reply) {
-            addMsg("ai-msg", data.reply, true);
-            historialChat.push({ role: "model", parts: [{ text: data.reply }] });
-            if (fuePorVoz) { leerVozAlta(data.reply); fuePorVoz = false; }
-        }
-    } catch(e) { document.getElementById(loadingId).remove(); addMsg("ai-msg", "Error de conexión."); }
-    activarControlesChat();
+      // Cambiamos la lógica para leer 'data.reply' que es lo que envía tu nuevo chat.js
+      if(data.reply) {
+          const respuestaIA = data.reply;
+          addMsg("ai-msg", respuestaIA, true); 
+          historialChat.push({ role: "model", parts: [{ text: respuestaIA }] });
+          
+          if (fuePorVoz) { 
+              leerVozAlta(respuestaIA); 
+              fuePorVoz = false; 
+          }
+      } else {
+          addMsg("ai-msg", "Lo siento, no he podido procesar eso. ¿Puedes repetirlo?", true);
+      }
+  } catch(e) {
+      console.error("Error de conexión:", e);
+      if(document.getElementById(loadingId)) document.getElementById(loadingId).remove();
+      addMsg("ai-msg", "Error de conexión con el servidor de la biblioteca.", true);
+  } finally { 
+      activarControlesChat();
+  }
 }
-
-
 
 function addMsg(tipo, texto, altavoz = false, id = null) {
-
-  const d = document.createElement("div");
-
-  d.className = "msg " + tipo; 
-
-  if (id) d.id = id;
-
-  
-
-  const s = document.createElement("span"); 
-
-  s.className = "texto-msg"; 
-
-  s.innerText = texto; 
-
-  d.appendChild(s);
-
-  
-
-  if (altavoz && tipo === "ai-msg") {
-
-      const a = document.createElement("span"); 
-
-      a.className = "altavoz"; 
-
-      a.innerHTML = "🔊"; 
-
-      a.title = "Escuchar mensaje";
-
-      a.onclick = () => leerVozAlta(texto); 
-
-      d.appendChild(a);
-
-  }
-
-  
-
-  const container = document.getElementById("chat-messages");
-
-  container.appendChild(d);
-
-  container.scrollTop = container.scrollHeight; 
-
-  return d;
-
-    const d = document.createElement("div");
-    d.className = "msg " + tipo;
-    if (id) d.id = id;
-    d.innerHTML = `<span class="texto-msg">${texto}</span>`;
-    if (altavoz && tipo === "ai-msg") {
-        const a = document.createElement("span");
-        a.innerHTML = " 🔊"; a.style.cursor="pointer";
-        a.onclick = () => leerVozAlta(texto);
-        d.appendChild(a);
-    }
-    const container = document.getElementById("chat-messages");
-    container.appendChild(d);
-    container.scrollTop = container.scrollHeight;
-}
-
-function leerVozAlta(t) {
-    const v = new SpeechSynthesisUtterance(t);
-    v.lang = 'es-ES';
-    window.speechSynthesis.speak(v);
-}
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (SpeechRecognition) {
-    const rec = new SpeechRecognition();
-    rec.lang = 'es-ES';
-    rec.onresult = (e) => { chatInput.value = e.results[0][0].transcript; fuePorVoz = true; handleSend(); };
-    rec.onend = () => micBtn.style.background = "";
-    function iniciarVoz() { micBtn.style.background = "#ff4d4d"; rec.start(); }
+  const d = document.createElement("div");
+  d.className = "msg " + tipo; 
+  if (id) d.id = id;
+  
+  const s = document.createElement("span"); 
+  s.className = "texto-msg"; 
+  s.innerText = texto; 
+  d.appendChild(s);
+  
+  if (altavoz && tipo === "ai-msg") {
+      const a = document.createElement("span"); 
+      a.className = "altavoz"; 
+      a.innerHTML = "?"; 
+      a.title = "Escuchar mensaje";
+      a.onclick = () => leerVozAlta(texto); 
+      d.appendChild(a);
+  }
+  
+  const container = document.getElementById("chat-messages");
+  container.appendChild(d);
+  container.scrollTop = container.scrollHeight; 
+  return d;
 }
 
 chatInput.onkeypress = (e) => { 
-
-    if (e.key === "Enter") { 
-
-        fuePorVoz = false; 
-
-        handleSend();
-
-    } 
-
+    if (e.key === "Enter") { 
+        fuePorVoz = false; 
+        handleSend();
+    } 
 };
 
-
-function activarControlesChat() { chatInput.disabled = false; micBtn.disabled = false; }
-function desactivarControlesChat() { chatInput.disabled = true; micBtn.disabled = true; }
-
-chatInput.onkeypress = (e) => { if (e.key === "Enter") handleSend(); };
 init();
-
 </script>
-
 <script>
-
-  if ('serviceWorker' in navigator) {
-
-    window.addEventListener('load', () => {
-
-      navigator.serviceWorker.register('./sw.js')
-
-        .then(reg => console.log('Service Worker registrado correctamente.', reg))
-
-        .catch(err => console.error('Error al registrar el Service Worker:', err));
-
-    });
-
-  }
-
-</script>
-
-</body>
-
-</html>
-}
-
-/* MENÚ SUPERIOR HORIZONTAL (Para todas las vistas) */
-.nav-container {
-  width: 100%;
-  background: var(--sidebar);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-}
-
-#menu-lateral {
-  display: flex;
-  flex-direction: row; /* Siempre horizontal */
-  gap: 20px;
-}
-
-.menu-link {
-  padding: 8px 15px;
-  color: var(--text);
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-/* ÁREA DE CONTENIDO PRINCIPAL */
-.main {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.btn-oscuro {
-  align-self: flex-end;
-  padding: 10px 15px;
-  background: var(--input-bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-/* HEADER: ESCUDO PRIMERO, LUEGO TÍTULO */
-.header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin: 20px 0;
-}
-
-.header-container img {
-  height: 180px;
-  width: auto;
-  margin-bottom: 15px; /* Separación con el título */
-}
-
-h1 { margin: 0; font-size: 26px; font-weight: 800; }
-
-/* CHAT IA (Debajo del Título) */
-#sidebar-chat {
-  width: 100%;
-  height: 400px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  overflow: hidden;
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-header {
-  background: var(--input-bg);
-  padding: 12px;
-  text-align: center;
-  font-weight: bold;
-}
-
-#chat-messages { flex-grow: 1; overflow-y: auto; padding: 10px; font-size: 14px; }
-
-.msg { padding: 10px; border-radius: 10px; margin-bottom: 8px; max-width: 80%; }
-.user-msg { background: #555; color: white; align-self: flex-end; margin-left: auto; }
-.ai-msg { background: var(--chat-ai-bg); }
-
-.chat-controls {
-  padding: 10px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 10px;
-}
-
-#chat-input {
-  flex-grow: 1;
-  padding: 12px;
-  border-radius: 25px;
-  border: 1px solid var(--border);
-  background: var(--input-bg);
-  color: var(--text);
-}
-
-/* BUSCADOR Y TABLA (Debajo de la IA) */
-.toolbar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-#searchInput, #estanterias {
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  flex-grow: 1;
-}
-
-table { width: 100%; border-collapse: collapse; }
-th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
-
-/* AJUSTES MÓVIL */
-@media (max-width: 600px) {
-  .header-container img { height: 120px; }
-  h1 { font-size: 20px; }
-  .toolbar { flex-direction: column; }
-  #sidebar-chat { height: 350px; }
-}
-</style>
-</head>
-
-<body>
-
-<!-- 1. MENU (Arriba de todo) -->
-<header class="nav-container">
-    <nav id="menu-lateral">
-        <a href="index.html" class="menu-link">Inicio</a>
-        <a href="acerca de.html" class="menu-link">Acerca de</a>
-        <a href="descargar app.html" class="menu-link">App</a>
-    </nav>
-</header>
-
-<main class="main">
-    <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
-
-    <!-- 2. ESCUDO Y TÍTULO (En ese orden) -->
-    <div class="header-container">
-        <img src="640px-Escudo_de_Ibros_(Jaén).svg.png" alt="Escudo de Ibros">
-        <h1>Registro Biblioteca Pública de Ibros</h1>
-    </div>
-
-    <!-- 3. IA (Debajo del título) -->
-    <div id="sidebar-chat">
-        <div class="chat-header">Asistente Digital</div>
-        <div id="chat-messages"></div>
-        <div class="chat-controls">
-            <input id="chat-input" placeholder="Escribe aquí..." disabled>
-            <button id="mic-btn" onclick="iniciarVoz()" disabled>🎙️</button>
-        </div>
-    </div>
-
-    <!-- 4. BUSCADOR Y TABLA -->
-    <div class="toolbar">
-        <input type="text" id="searchInput" placeholder="Buscar libro...">
-        <select id="estanterias"></select>
-    </div>
-
-    <div class="table-responsive">
-        <table>
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Autor</th>
-                    <th>Código</th>
-                </tr>
-            </thead>
-            <tbody id="cuerpoTabla"></tbody>
-        </table>
-    </div>
-</main>
-
-<script>
-// Mantén aquí toda tu lógica de JavaScript (API_URL, init, handleSend, etc.)
-// Asegúrate de que este bloque de script sea idéntico en todas tus páginas para que la IA funcione en todas.
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('Service Worker registrado correctamente.', reg))
+        .catch(err => console.error('Error al registrar el Service Worker:', err));
+    });
+  }
 </script>
 </body>
 </html>
