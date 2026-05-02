@@ -1,230 +1,611 @@
-
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Descargar App - Biblioteca Ibros</title>
-    
-    <!-- FAVICON Y MANIFEST -->
-    <link rel="icon" type="image/png" href="gemini190px.png">
-    <link rel="apple-touch-icon" href="gemini512px.png">
-    <link rel="manifest" href="manifest.json">
 
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #222222;
-            --border: #dddddd;
-            --input-bg: #f5f5f5;
-            --sidebar: #f0f0f0;
-            --accent: #2e7d32;
-            --card-shadow: rgba(0,0,0,0.1);
-        }
-        [data-theme="dark"] {
-            --bg: #1a1a1a;
-            --text: #eeeeee;
-            --border: #444444;
-            --input-bg: #2a2a2a;
-            --sidebar: #2d2d2d;
-            --card-shadow: rgba(0,0,0,0.4);
-        }
+<meta charset="UTF-8">
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            transition: background 0.3s;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        /* --- DISEÑO DESKOP (PC) --- */
-        .sidebar {
-            width: 280px;
-            height: 100vh;
-            background: var(--sidebar);
-            position: fixed;
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-        }
+<title>Descargar App - Biblioteca Pública de Ibros</title>
 
-        .sidebar-content { padding: 40px 20px; text-align: center; }
 
-        #menu-lateral { display: flex; flex-direction: column; gap: 15px; }
-        .menu-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.2s;
-        }
-        .menu-link:hover { background: var(--input-bg); color: var(--accent); }
 
-        .main {
-            margin-left: 280px;
-            width: calc(100% - 280px);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            box-sizing: border-box;
-        }
+<style>
 
-        .card {
-            width: 100%;
-            max-width: 600px;
-            background: var(--bg);
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            box-shadow: 0 15px 35px var(--card-shadow);
-            text-align: center;
-        }
+:root {
 
-        /* BOTONES */
-        .download-btn {
-            display: flex;
-            align-items: center;
-            padding: 18px 25px;
-            margin: 15px 0;
-            background: var(--input-bg);
-            color: var(--text);
-            text-decoration: none;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .download-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .icon-circle { 
-            width: 45px; height: 45px; background: var(--bg); 
-            border-radius: 50%; display: flex; align-items: center; 
-            justify-content: center; margin-right: 15px; font-size: 20px;
-        }
+  --bg: #fff;
 
-        /* NOTAS OCULTAS */
-        .instrucciones {
-            display: none;
-            text-align: left;
-            background: var(--input-bg);
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 14px;
-            margin-top: 10px;
-            border-left: 4px solid var(--accent);
-        }
+  --text: #222;
 
-        /* --- OPTIMIZACIÓN MÓVIL (DETECTA SMARTPHONE) --- */
-        @media (max-width: 768px) {
-            body { flex-direction: column; padding-bottom: 80px; }
-            
-            .sidebar { 
-                position: relative; width: 100%; height: auto; 
-                border-right: none; border-bottom: 1px solid var(--border);
-                padding: 10px 0;
-            }
-            #menu-lateral { flex-direction: row; justify-content: space-around; gap: 5px; }
-            .menu-link { font-size: 13px; padding: 5px; }
+  --border: #ddd;
 
-            .main { margin-left: 0; width: 100%; padding: 20px; }
-            .card { padding: 25px; border-radius: 0; border: none; box-shadow: none; background: transparent; }
-            
-            h1 { font-size: 24px; }
-            .download-btn { padding: 15px; font-size: 16px; }
+  --input-bg: #f5f5f5;
 
-            /* Barra navegación inferior solo en móvil */
-            .bottom-nav {
-                display: flex !important;
-                position: fixed; bottom: 0; width: 100%;
-                background: var(--sidebar); border-top: 1px solid var(--border);
-                justify-content: space-around; padding: 10px 0; z-index: 200;
-            }
-        }
+  --sidebar: #f0f0f0;
 
-        .bottom-nav { display: none; }
-        .btn-tema { position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text); cursor: pointer; font-size: 12px; }
-    </style>
+  --accent: #2e7d32; 
+
+}
+
+[data-theme="dark"] {
+
+  --bg: #1a1a1a;
+
+  --text: #eee;
+
+  --border: #444;
+
+  --input-bg: #2a2a2a;
+
+  --sidebar: #2d2d2d;
+
+}
+
+body {
+
+  margin: 0;
+
+  font-family: Arial, sans-serif;
+
+  background: var(--bg);
+
+  color: var(--text);
+
+  display: flex;
+
+  transition: background 0.3s, color 0.3s;
+
+}
+
+
+
+/* SIDEBAR PERSISTENTE */
+
+.sidebar {
+
+  width: 280px;
+
+  height: 100vh;
+
+  background: var(--sidebar);
+
+  position: fixed;
+
+  display: flex;
+
+  flex-direction: column;
+
+  border-right: 1px solid var(--border);
+
+  z-index: 100;
+
+}
+
+
+
+.sidebar-content {
+
+  padding: 20px;
+
+  text-align: center;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+
+#menu-lateral {
+
+  margin-top: 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+}
+
+
+
+.menu-link {
+
+  display: block;
+
+  padding: 8px 10px;
+
+  color: var(--text);
+
+  text-decoration: none;
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  transition: opacity 0.2s;
+
+}
+
+.menu-link:hover {
+
+  opacity: 0.6;
+
+  text-decoration: underline;
+
+}
+
+
+
+/* MAIN AREA */
+
+.main {
+
+  margin-left: 280px; 
+
+  padding: 40px 20px;
+
+  width: calc(100% - 280px);
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  position: relative;
+
+  min-height: 100vh;
+
+}
+
+
+
+/* BOTÓN MODO OSCURO */
+
+.btn-oscuro {
+
+  position: absolute;
+
+  top: 20px;
+
+  right: 20px;
+
+  padding: 10px 15px;
+
+  background: var(--input-bg);
+
+  color: var(--text);
+
+  border: 1px solid var(--border);
+
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  font-weight: bold;
+
+  font-size: 14px;
+
+  transition: 0.3s;
+
+}
+
+
+
+/* TARJETA DESCARGAS */
+
+.card {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    background: var(--bg);
+
+    border: 1px solid var(--border);
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+    box-sizing: border-box;
+
+    margin-top: 40px;
+
+}
+
+
+
+h1 {
+
+    font-size: 26px;
+
+    margin-bottom: 15px;
+
+    color: var(--text);
+
+}
+
+
+
+p {
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+
+    font-size: 16px;
+
+    color: var(--text);
+
+    opacity: 0.9;
+
+}
+
+
+
+/* BOTONES DE DESCARGA */
+
+.download-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+}
+
+
+
+.download-btn {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    padding: 18px 25px;
+
+    background: var(--input-bg);
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    border: 2px solid var(--border);
+
+    border-radius: 12px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    transition: all 0.3s ease;
+
+}
+
+
+
+.download-btn span.icon {
+
+    font-size: 24px;
+
+}
+
+
+
+.download-btn:hover {
+
+    background: var(--accent);
+
+    border-color: var(--accent);
+
+    color: white;
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+
+}
+
+
+
+/* MÓVIL */
+
+@media (max-width: 768px) {
+
+  .sidebar {
+
+    width: 100%;
+
+    height: auto;
+
+    position: relative;
+
+    border-right: none;
+
+    border-bottom: 2px solid var(--border);
+
+  }
+
+  #menu-lateral {
+
+    flex-direction: row;
+
+    justify-content: center;
+
+    margin-bottom: 10px;
+
+    flex-wrap: wrap;
+
+  }
+
+  .main {
+
+    margin-left: 0;
+
+    width: 100%;
+
+    padding: 60px 15px 20px 15px;
+
+  }
+
+  .card { padding: 25px; margin-top: 20px; }
+
+  h1 { font-size: 22px; }
+
+  .download-btn {
+
+    font-size: 16px;
+
+    padding: 15px 20px;
+
+  }
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <button class="btn-tema" onclick="toggleTema()">Modo Osscuro</button>
 
-    <!-- SIDEBAR (PC) / MENÚ SUPERIOR (MÓVIL) -->
-    <div class="sidebar">
-        <div class="sidebar-content">
-            <nav id="menu-lateral">
-                <a href="index.html" class="menu-link">Inicio</a>
-                <a href="acerca de.html" class="menu-link">Acerca de</a>
-                <a href="descargar-app.html" class="menu-link" style="color:var(--accent)">Descargar</a>
-            </nav>
-        </div>
+
+<div class="sidebar">
+
+  <div class="sidebar-content">
+
+      <img src="escudo.png" style="width:90px; margin: 10px auto;" alt="Escudo Sidebar" onerror="this.style.display='none'">
+
+      
+
+     <nav id="menu-lateral">
+
+          <a href="index.html" class="menu-link">Inicio</a>
+
+          <a href="acerca de.html" class="menu-link">Acerca de</a>
+
+          <a href="descargar app.html" class="menu-link">Descargar App</a>
+
+      </nav>
+
+  </div>
+
+</div>
+
+
+
+<div class="main">
+
+  <button id="btn-tema" class="btn-oscuro" onclick="toggleTema()">Modo Oscuro</button>
+
+
+
+  <div class="card">
+
+    <h1>Lleva la Biblioteca contigo</h1>
+
+    
+
+    <p>
+
+        Accede a todo nuestro catálogo y consulta la disponibilidad directamente desde tu dispositivo favorito. 
+
+        Elige tu plataforma para descargar la aplicación.
+
+    </p>
+
+
+
+    <div class="download-container">
+
+        <!-- Sustituye 'nombre_de_tu_archivo.apk' por el nombre real que tenga tu archivo en GitHub -->
+
+<a href="Registro Biblioteca Ibros.apk" download="Registro_Biblioteca_Ibros.apk" class="btn-descargar-apk">
+
+   <span class="icon">🤖</span>
+
+            Descargar para Android
+
+</a>
+
+
+
+        <a href="#" class="download-btn">
+
+            <span class="icon">🍏</span>
+
+            Descargar para iOS
+
+      
+
+<p>
+
+  Para IOS
+
+
+
+  Abre Safari: Entra en la web de la biblioteca desde el navegador oficial de tu iPhone.
+
+
+
+Pulsa Compartir: En la parte inferior de la pantalla, busca el icono del cuadrado con una flecha hacia arriba.
+
+
+
+Añadir a la pantalla de inicio: Desliza el menú hacia abajo hasta encontrar la opción "Añadir a la pantalla de inicio".
+
+
+
+Confirmar: Pulsa "Añadir" en la esquina superior derecha.
+
+
+
+¡Listo! El icono con el escudo de Ibros aparecerá ahora entre tus aplicaciones. Al abrirlo desde allí, la web funcionará como una aplicación real, sin barras de navegación y con acceso rápido.
+
+    </p>
+
+        </a>
+
+        <a href="#" class="download-btn">
+
+            <span class="icon">💻</span>
+
+            Descargar para PC
+
+          <p>
+
+      Para PC
+
+    
+
+            Usa Chrome o Edge: Abre la web de la biblioteca en uno de estos navegadores.
+
+
+
+Busca el icono de instalación: En la barra de direcciones (donde escribes la URL), a la derecha del todo, aparecerá un icono de una pantalla con una flecha hacia abajo o un símbolo de "+".
+
+
+
+Pulsa Instalar: Haz clic en ese icono y selecciona "Instalar".
+
+
+
+Acceso directo:
+
+
+
+En Windows, se creará automáticamente un icono en tu Escritorio y en el menú de Inicio.
+
+
+
+En Linux, aparecerá en tu lanzador de aplicaciones (GNOME, KDE, etc.) como una aplicación nativa más.
+
+            
+
+          </p>
+
+        </a>
+
     </div>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div class="main">
-        <div class="card">
-            <h1>Descargar App</h1>
-            <p>Elige tu plataforma para llevar la biblioteca siempre contigo.</p>
 
-            <!-- ANDROID -->
-            <a href="Registro_Biblioteca_Ibros.apk" download class="download-btn">
-                <div class="icon-circle">🤖</div>
-                <span>Android (.apk)</span>
-            </a>
 
-            <!-- iOS -->
-            <div class="download-btn" onclick="toggleInfo('ios')">
-                <div class="icon-circle">🍏</div>
-                <span>iPhone / iOS</span>
-            </div>
-            <div id="info-ios" class="instrucciones">
-                <b>Para instalar en iPhone:</b><br>
-                1. Abre en Safari.<br>
-                2. Pulsa el botón "Compartir" (cuadrado con flecha).<br>
-                3. Selecciona "Añadir a la pantalla de inicio".
-            </div>
+  </div>
 
-            <!-- PC -->
-            <div class="download-btn" onclick="toggleInfo('pc')">
-                <div class="icon-circle">💻</div>
-                <span>Windows / Linux</span>
-            </div>
-            <div id="info-pc" class="instrucciones">
-                <b>Para instalar en PC:</b><br>
-                1. Usa Chrome o Edge.<br>
-                2. En la barra de direcciones, pulsa el icono de instalar (+).<br>
-                3. La app se guardará en tu escritorio.
-            </div>
-        </div>
-    </div>
+</div>
 
-    <!-- NAVEGACIÓN MÓVIL (Solo visible en pantallas pequeñas) -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="menu-link">🏠 Inicio</a>
-        <a href="acerca-de.html" class="menu-link">📖 Acerca de</a>
-        <a href="descargar-app.html" class="menu-link" style="color:var(--accent)">📲 Descargar</a>
-    </nav>
 
-    <script>
-        function toggleTema() {
-            const html = document.documentElement;
-            const isDark = html.getAttribute("data-theme") === "dark";
-            isDark ? html.removeAttribute("data-theme") : html.setAttribute("data-theme", "dark");
-            localStorage.setItem("tema", isDark ? "light" : "dark");
-        }
 
-        if (localStorage.getItem("tema") === "dark") document.documentElement.setAttribute("data-theme", "dark");
+<script>
 
-        function toggleInfo(id) {
-            const el = document.getElementById('info-' + id);
-            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-        }
-    </script>
+// --- LÓGICA DE TEMA (Sincronizada con el resto de la web) ---
+
+function toggleTema() {
+
+    const html = document.documentElement;
+
+    const btn = document.getElementById("btn-tema");
+
+    
+
+    if (html.getAttribute("data-theme") === "dark") {
+
+        html.removeAttribute("data-theme");
+
+        localStorage.setItem("tema", "light");
+
+        btn.innerText = "Modo Oscuro";
+
+    } else {
+
+        html.setAttribute("data-theme", "dark");
+
+        localStorage.setItem("tema", "dark");
+
+        btn.innerText = "Modo Claro";
+
+    }
+
+}
+
+
+
+function aplicarTemaAlCargar() {
+
+    const temaGuardado = localStorage.getItem("tema");
+
+    if (temaGuardado === "dark") {
+
+        document.documentElement.setAttribute("data-theme", "dark");
+
+        document.getElementById("btn-tema").innerText = "Modo Claro";
+
+    }
+
+}
+
+
+
+aplicarTemaAlCargar();
+
+
+
+// Escucha por si cambias el tema en otra pestaña
+
+window.addEventListener('storage', (e) => {
+
+    if (e.key === 'tema') {
+
+        location.reload(); 
+
+    }
+
+});
+
+</script>
+
+
+
 </body>
-</html>
+
+</html> 
