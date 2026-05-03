@@ -1,6 +1,6 @@
 {
   "name": "Registro Biblioteca Pública de Ibros",
-  "short_name": "Registro Biblioteca Ibros",
+  "short_name": "Registro Biblioteca",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
