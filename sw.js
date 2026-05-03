@@ -1,16 +1,16 @@
-const CACHE_NAME = 'biblioteca-v3'; // Pongo v3 ya directamente
+const CACHE_NAME = 'biblioteca-v4'; // Subimos la versión para forzar la actualización
 const assets = [
   './',
   './index.html',
   './acerca de.html',
   './descargar app.html',
   './gemini190px.png',
-  './gemini512p.png',
+  './gemini512p.png', // Nombre corregido y unificado
   './manifest.json'
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Fuerza a que se active de inmediato
+  self.skipWaiting(); // Fuerza a que el nuevo Service Worker se active de inmediato
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(assets);
@@ -18,7 +18,6 @@ self.addEventListener('install', event => {
   );
 });
 
-// Este es el evento que te faltaba para borrar la caché vieja
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -36,8 +35,17 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then(networkResponse => {
+        // Si hay internet y la petición es exitosa, guardamos la versión más nueva en caché
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      })
+      .catch(() => {
+        // Si falla la red (el usuario está offline), servimos lo que hay en la caché
+        return caches.match(event.request);
+      })
   );
 });
