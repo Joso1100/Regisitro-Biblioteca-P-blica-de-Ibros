@@ -5,7 +5,7 @@ const assets = [
   './acerca de.html',
   './descargar app.html',
   './gemini190px.png',
-  './gemini512px.png',
+  './gemini512p.png',
   './manifest.json'
 ];
 
