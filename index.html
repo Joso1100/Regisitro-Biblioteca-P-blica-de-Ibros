@@ -20,7 +20,7 @@
 
 <title>Registro Biblioteca Pública de Ibros</title>
 
-  <p> VERSIÓN 1.0.6 </p>
+  
 
 
 <style>
@@ -735,16 +735,6 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 
 <body>
 
-<div id="pantalla-actualizacion" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(30, 30, 30, 0.95); z-index: 9999; color: white; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;">
-  <h2 style="font-size: 24px; margin-bottom: 10px;">¡Actualización Obligatoria!</h2>
-  <p style="margin-bottom: 30px; font-size: 16px;">Hay una nueva versión de la Biblioteca. Descarga e instala el nuevo archivo para seguir usando la aplicación.</p>
-  
-  <!-- El botón que dispara la descarga -->
-  <button onclick="forzarActualizacion()" style="background-color: #007bff; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 8px; cursor: pointer; font-weight: bold;">
-    Descargar Nueva Versión
-  </button>
-</div>
-
 <div class="sidebar">
 
   <div class="sidebar-content">
@@ -758,7 +748,7 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
           <a href="acerca de.html" class="menu-link">Acerca de</a>
 
           <a href="descargar app.html" class="menu-link">Descargar App</a>
-
+<p> VERSIÓN 1.0.7</p>
       </nav>
 
   </div>
@@ -1380,43 +1370,6 @@ init();
   }
 
 </script>
-
-  <script>
-  // La versión actual de este código (la que tiene el usuario instalada)
-const VERSION_APP = "1.0.6";
-// Variable para guardar la ruta de la nueva descarga
-let enlaceNuevaApk = ""; 
-
-window.addEventListener('load', () => {
-  const url = './version.json?t=' + new Date().getTime();
-
-  fetch(url, { cache: "no-store" })
-    .then(respuesta => respuesta.json())
-    .then(datosServidor => {
-      
-      // Si la versión del servidor es diferente (más nueva)...
-      if (datosServidor.version !== VERSION_APP) {
-        
-        // 1. Guardamos la ruta del nuevo APK
-        enlaceNuevaApk = datosServidor.apk_url; 
-        
-        // 2. Mostramos la pantalla gigante de bloqueo
-        document.getElementById('pantalla-actualizacion').style.display = 'flex';
-      }
-    })
-    .catch(error => {
-      console.log("Error al comprobar la versión:", error);
-    });
-});
-
-// Esta función se ejecuta al pulsar el botón "Actualizar Ahora" en el HTML
-function forzarActualizacion() {
-  if (enlaceNuevaApk !== "") {
-    // Esto fuerza al navegador/app a abrir la ruta, iniciando la descarga del .apk
-    window.location.href = enlaceNuevaApk;
-  }
-}
-  </script>
 
 </body>
 
