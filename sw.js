@@ -1,4 +1,4 @@
-const CACHE_NAME = 'biblioteca-v6'; // Subimos la versión para forzar la actualización
+const CACHE_NAME = 'biblioteca-v7'; // Subimos la versión para forzar la actualización
 const assets = [
   './',
   './index.html',
