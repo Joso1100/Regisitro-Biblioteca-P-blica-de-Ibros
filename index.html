@@ -1380,6 +1380,43 @@ init();
 
 </script>
 
+  <script>
+  // La versión actual de este código (la que tiene el usuario instalada)
+const VERSION_APP = "1.0.5";
+// Variable para guardar la ruta de la nueva descarga
+let enlaceNuevaApk = ""; 
+
+window.addEventListener('load', () => {
+  const url = './version.json?t=' + new Date().getTime();
+
+  fetch(url, { cache: "no-store" })
+    .then(respuesta => respuesta.json())
+    .then(datosServidor => {
+      
+      // Si la versión del servidor es diferente (más nueva)...
+      if (datosServidor.version !== VERSION_APP) {
+        
+        // 1. Guardamos la ruta del nuevo APK
+        enlaceNuevaApk = datosServidor.apk_url; 
+        
+        // 2. Mostramos la pantalla gigante de bloqueo
+        document.getElementById('pantalla-actualizacion').style.display = 'flex';
+      }
+    })
+    .catch(error => {
+      console.log("Error al comprobar la versión:", error);
+    });
+});
+
+// Esta función se ejecuta al pulsar el botón "Actualizar Ahora" en el HTML
+function forzarActualizacion() {
+  if (enlaceNuevaApk !== "") {
+    // Esto fuerza al navegador/app a abrir la ruta, iniciando la descarga del .apk
+    window.location.href = enlaceNuevaApk;
+  }
+}
+  </script>
+
 </body>
 
 </html>
