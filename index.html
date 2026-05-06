@@ -757,19 +757,21 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 
 
 
-<div class="header-container">
-    <!-- Contenedor Izquierdo: Escudo -->
- 
-  <div class="header-item" style="text-align: center;">
-    <img src="640px-Escudo_de_Ibros_(Jaén).svg.png" alt="Escudo de Ibros">
-</div>
+  <div id="sidebar-chat">
 
-    <!-- Contenedor Central: Título -->
-    <div class="header-title">
-        <h1>Registro Biblioteca Pública de Ibros</h1>
-    </div>
+      <div class="chat-header">Bibliotecario Digital</div>
 
-</div>
+      <div id="chat-messages"></div>
+
+      <div class="chat-controls">
+
+          <input id="chat-input" placeholder="Escribe tu mensaje..." disabled>
+
+          <button id="mic-btn" onclick="iniciarVoz()" title="Hablar por micrófono" disabled>🎙️</button>
+
+      </div>
+
+  </div>
 
 </div>
 
@@ -912,7 +914,7 @@ let fuePorVoz = false;
 
 async function init() {
 
-  addMsg("ai-msg", "¡Hola, soy José! tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte ideas sobre qué leer o darte explicaciones. ¿Sobre qué te apetece leer hoy?", true);
+  addMsg("ai-msg", "¡Hola, soy José! Tu asistente de la Biblioteca de Ibros. Puedo decirte de qué tratan los títulos, darte ideas de lectura o hacerte aclaraciones. ¿Sobre qué te apetece leer hoy?", true);
 
   
 
@@ -1220,7 +1222,7 @@ async function handleSend() {
 
   const loadingId = "carga-" + Date.now();
 
-  addMsg("ai-msg", "Pensando...", false, loadingId);
+  addMsg("ai-msg", "Escribiendo...", false, loadingId);
 
 
 
