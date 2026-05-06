@@ -769,10 +769,6 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
         <h1>Registro Biblioteca Pública de Ibros</h1>
     </div>
 
-    <!-- Contenedor Derecho: Nueva Imagen -->
-    <div class="header-item">
-        <img src="tu-otra-imagen.png" alt="Otra imagen">
-    </div>
 </div>
 
 </div>
@@ -916,7 +912,7 @@ let fuePorVoz = false;
 
 async function init() {
 
-  addMsg("ai-msg", "¡Hola! Soy tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte recomendaciones o ayudarte a buscar. ¿Qué te apetece leer hoy?", true);
+  addMsg("ai-msg", "¡Hola, soy José! tu asistente de la Biblioteca de Ibros. Puedo resumirte libros, darte ideas sobre qué leer o darte explicaciones. ¿Sobre qué te apetece leer hoy?", true);
 
   
 
@@ -1224,7 +1220,7 @@ async function handleSend() {
 
   const loadingId = "carga-" + Date.now();
 
-  addMsg("ai-msg", "Escribiendo...", false, loadingId);
+  addMsg("ai-msg", "Pensando...", false, loadingId);
 
 
 
