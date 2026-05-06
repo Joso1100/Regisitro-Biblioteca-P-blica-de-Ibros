@@ -25,6 +25,44 @@
 
 <style>
 
+  .header-container {
+    display: flex;             /* Activa el modo flexible */
+    justify-content: space-between; /* Separa los tres bloques equitativamente */
+    align-items: center;       /* Centra verticalmente el contenido */
+    padding: 10px 20px;
+    background-color: #f8f9fa; /* Color de fondo opcional */
+    gap: 15px;                 /* Espacio mínimo entre los elementos para que no se peguen */
+}
+
+.header-item {
+    flex: 0 0 100px;           /* Los contenedores laterales tienen un ancho fijo (ajusta los 100px) */
+    display: flex;
+    justify-content: center;
+}
+
+.header-item img {
+    max-width: 100%;           /* La imagen nunca será más grande que su contenedor */
+    height: auto;
+}
+
+.header-title {
+    flex: 1;                   /* El título ocupa todo el espacio central restante */
+    text-align: center;
+}
+
+.header-title h1 {
+    margin: 0;
+    font-size: 1.5rem;         /* Ajusta el tamaño según necesites */
+}
+
+/* Opcional: Para móviles muy pequeños, apila los elementos */
+@media (max-width: 600px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
 :root {
 
   --bg: #fff;
@@ -636,13 +674,13 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 /* ========================= */
 /* 📱 MÓVIL ESTILO APP PRO */
 /* ========================= */
-@media (max-width: 768px) {
 
-  /* 1. MAGIA FLEXBOX: Permite mezclar elementos de Sidebar y Main */
-  body { display: flex; flex-direction: column; background: var(--bg); }
-  .sidebar { display: contents; } 
-  .main { display: contents; }
-
+ @media (max-width: 600px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
   /* 2. MENÚ LATERAL -> AHORA MENÚ SUPERIOR HORIZONTAL */
   .sidebar-content { 
     display: flex; /* Quitamos el 'display: none' */
