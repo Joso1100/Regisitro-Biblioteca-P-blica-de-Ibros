@@ -783,16 +783,17 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 
   
 
-<div class="header-container" style="display: flex; flex-direction: column; align-items: center; text-align: center; min-height: auto; padding: 20px;">
+<div class="header-container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; padding: 20px; min-height: auto;">
    
-   <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px;">
-      <img src="qr web biblioteca.png" alt="QR Web" style="width: 15vw; min-width: 80px; max-width: 120px; height: auto;">
-      
-      <img src="640px-Escudo_de_Ibros_(Jaén).svg.png" alt="Escudo de Ibros" style="width: 20vw; min-width: 100px; max-width: 180px; height: auto;">
+   <div style="display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+      <img src="qr web biblioteca.png" alt="QR Web" style="width: 80px; height: auto;">
+      <img src="640px-Escudo_de_Ibros_(Jaén).svg.png" alt="Escudo de Ibros" style="width: 120px; height: auto;">
    </div>
 
-   <div class="header-tittle">
-     <h1 style="font-size: 3vw; min-size: 24px; margin: 0;">Registro Biblioteca Pública de Ibros</h1>
+   <div style="flex: 1; min-width: 300px; text-align: center;">
+     <h1 style="font-size: clamp(24px, 4vw, 45px); margin: 0; line-height: 1.2;">
+       Registro Biblioteca Pública de Ibros
+     </h1>
    </div>
 
 </div>
