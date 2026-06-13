@@ -1006,35 +1006,94 @@ select.onchange = () => {
 
 
 
-async function cargarCacheFondo(estanterias) {
+  async function cargarCacheFondo(estanterias) {
+  const container = document.getElementById("loading-cache-container");
+  const textIndicator = document.getElementById("loading-cache-text");
+  let total = estanterias.length;
+  let completadas = 0;
 
   for (let est of estanterias) {
-
       try {
+          // Actualiza el texto de progreso de forma segura si el elemento existe
+          if (textIndicator) {
+              textIndicator.textContent = `Cargando ${est} (${completadas}/${total})...`;
+          }
 
           const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-
           const libros = await res.json();
-
+          
           libros.forEach(l => {
-
               if(l.titulo && !String(l.titulo).includes("Título")) {
-
                   librosCache.push({
-
                       titulo: String(l.titulo),
-
                       autor: String(l.autor || "Anónimo"),
-
                       id: String(l.id || "N/A"),
-
                       estanteria: est 
-
                   });
-
               }
-
           });
+      } catch(e) {
+          console.warn(`Error cargando caché para estantería ${est}:`, e);
+      }
+      completadas++;
+  }
+
+  // ==========================================
+  // NUEVO: ESTO VA AQUÍ, JUSTO AL SALIR DEL BUCLE FOR
+  // ==========================================
+  try {
+      if (container) {
+          if (textIndicator) {
+              textIndicator.textContent = "¡Buscador listo! Todas las estanterías cargadas.";
+          }
+          
+          // Ocultamos el spinner giratorio
+          const spinner = container.querySelector(".spinner-cache");
+          if (spinner) spinner.style.display = "none"; 
+          
+          // Cambiamos el borde a un tono verdoso de éxito (opcional)
+          container.style.borderColor = "#2ec4b6"; 
+          
+          // Esperamos 2 segundos para que el usuario lea que ya terminó y lo desvanecemos
+          setTimeout(() => {
+              container.style.opacity = "0";
+              container.style.transform = "scale(0.9)";
+              setTimeout(() => {
+                  container.style.display = "none";
+              }, 500); // Tiempo que tarda en desaparecer por completo
+          }, 2000);
+      }
+  } catch (errorVisual) {
+      console.warn("Error al ocultar el indicador de carga:", errorVisual);
+  }
+}
+
+  // Al finalizar, ocultamos el contenedor de forma segura protegiendo el flujo principal
+  try {
+      if (container) {
+          if (textIndicator) {
+              textIndicator.textContent = "¡Buscador listo! Todas las estanterías cargadas.";
+          }
+          
+          const spinner = container.querySelector(".spinner-cache");
+          if (spinner) {
+              spinner.style.display = "none"; 
+          }
+          
+          container.style.borderColor = "#2ec4b6"; 
+          
+          setTimeout(() => {
+              container.style.opacity = "0";
+              container.style.transform = "scale(0.9)";
+              setTimeout(() => {
+                  container.style.display = "none";
+              }, 500);
+          }, 2000);
+      }
+  } catch (errorVisual) {
+      console.warn("No se pudo ocultar el indicador visual, pero los libros se cargaron:", errorVisual);
+  }
+}
 
       } catch(e) {
 
