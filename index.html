@@ -1006,40 +1006,91 @@ select.onchange = () => {
 
 
 
- async function cargarCacheFondo(estanterias) {
-  const container = document.getElementById("loading-cache-container");
-  const textIndicator = document.getElementById("loading-cache-text");
-  let total = estanterias.length;
-  let completadas = 0;
+async function cargarCacheFondo(estanterias) {
+    const container = document.getElementById("loading-cache-container");
+    const textIndicator = document.getElementById("loading-cache-text");
 
-  for (let est of estanterias) {
-      try {
-          // 1. Actualiza el texto de progreso de forma segura si existe el elemento
-          if (textIndicator) {
-              textIndicator.textContent = `Cargando ${est} (${completadas}/${total})...`;
-          }
+    let total = estanterias.length;
+    let completadas = 0;
 
-          const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-          const libros = await res.json();
-          
-          // 2. Guarda los libros en la caché para el buscador dinámico
-          libros.forEach(l => {
-              if(l.titulo && !String(l.titulo).includes("Título")) {
-                  librosCache.push({
-                      titulo: String(l.titulo),
-                      autor: String(l.autor || "Anónimo"),
-                      id: String(l.id || "N/A"),
-                      estanteria: est 
-                  });
-              }
-          }); // <-- Aquí se cierra correctamente el forEach
-          
-      } catch(e) {
-          console.warn(`Error cargando caché para estantería ${est}:`, e);
-      }
-      
-      completadas++;
-  } // <-- Aquí se cierra correctamente el bucle for
+    for (let est of estanterias) {
+
+        try {
+
+            if (textIndicator) {
+                textIndicator.textContent =
+                    `Cargando ${est} (${completadas + 1}/${total})...`;
+            }
+
+            const res = await fetch(
+                `${API_URL}?estanteria=${encodeURIComponent(est)}`
+            );
+
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
+            }
+
+            const libros = await res.json();
+
+            if (Array.isArray(libros)) {
+
+                libros.forEach(l => {
+
+                    if (
+                        l.titulo &&
+                        !String(l.titulo).includes("Título")
+                    ) {
+
+                        librosCache.push({
+                            titulo: String(l.titulo),
+                            autor: String(l.autor || "Anónimo"),
+                            id: String(l.id || "N/A"),
+                            estanteria: est
+                        });
+
+                    }
+
+                });
+
+            }
+
+        } catch (e) {
+
+            console.warn(
+                `Error cargando caché para estantería ${est}:`,
+                e
+            );
+
+        }
+
+        completadas++;
+    }
+
+    if (container) {
+
+        if (textIndicator) {
+            textIndicator.textContent =
+                "¡Buscador listo! Todas las estanterías cargadas.";
+        }
+
+        const spinner = container.querySelector(".spinner-cache");
+
+        if (spinner) {
+            spinner.style.display = "none";
+        }
+
+        setTimeout(() => {
+
+            container.style.opacity = "0";
+
+            setTimeout(() => {
+                container.style.display = "none";
+            }, 500);
+
+        }, 1500);
+
+    }
+}
 
   // 3. Una vez fuera del bucle, procesamos la animación de salida
   try {
