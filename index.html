@@ -631,7 +631,39 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }
 
 }
 
+/* INDICADOR DE CARGA DE CACHÉ */
+#loading-cache-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: -25px auto 25px auto;
+  padding: 10px 20px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  width: fit-content;
+  max-width: 90%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text);
+}
 
+.spinner-cache {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-top: 2px solid var(--text);
+  border-radius: 50%;
+  animation: spinCache 0.8s linear infinite;
+}
+
+@keyframes spinCache {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 /* ========================= */
 /* 📱 MÓVIL ESTILO APP PRO */
