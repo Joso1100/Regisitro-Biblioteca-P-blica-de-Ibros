@@ -1006,7 +1006,7 @@ select.onchange = () => {
 
 
 
-  async function cargarCacheFondo(estanterias) {
+ async function cargarCacheFondo(estanterias) {
   const container = document.getElementById("loading-cache-container");
   const textIndicator = document.getElementById("loading-cache-text");
   let total = estanterias.length;
@@ -1014,7 +1014,7 @@ select.onchange = () => {
 
   for (let est of estanterias) {
       try {
-          // Actualiza el texto de progreso de forma segura si el elemento existe
+          // 1. Actualiza el texto de progreso de forma segura si existe el elemento
           if (textIndicator) {
               textIndicator.textContent = `Cargando ${est} (${completadas}/${total})...`;
           }
@@ -1022,6 +1022,7 @@ select.onchange = () => {
           const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
           const libros = await res.json();
           
+          // 2. Guarda los libros en la caché para el buscador dinámico
           libros.forEach(l => {
               if(l.titulo && !String(l.titulo).includes("Título")) {
                   librosCache.push({
@@ -1031,12 +1032,41 @@ select.onchange = () => {
                       estanteria: est 
                   });
               }
-          });
+          }); // <-- Aquí se cierra correctamente el forEach
+          
       } catch(e) {
           console.warn(`Error cargando caché para estantería ${est}:`, e);
       }
+      
       completadas++;
+  } // <-- Aquí se cierra correctamente el bucle for
+
+  // 3. Una vez fuera del bucle, procesamos la animación de salida
+  try {
+      if (container) {
+          if (textIndicator) {
+              textIndicator.textContent = "¡Buscador listo! Todas las estanterías cargadas.";
+          }
+          
+          const spinner = container.querySelector(".spinner-cache");
+          if (spinner) {
+              spinner.style.display = "none"; 
+          }
+          
+          container.style.borderColor = "#2ec4b6"; 
+          
+          setTimeout(() => {
+              container.style.opacity = "0";
+              container.style.transform = "scale(0.9)";
+              setTimeout(() => {
+                  container.style.display = "none";
+              }, 500);
+          }, 2000);
+      }
+  } catch (errorVisual) {
+      console.warn("No se pudo ocultar el indicador visual, pero los libros están listos:", errorVisual);
   }
+} // <-- Aquí termina la función cargarCacheFondo
 
   // ==========================================
   // NUEVO: ESTO VA AQUÍ, JUSTO AL SALIR DEL BUCLE FOR
