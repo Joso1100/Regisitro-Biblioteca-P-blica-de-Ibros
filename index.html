@@ -1007,54 +1007,34 @@ select.onchange = () => {
 
 
 async function cargarCacheFondo(estanterias) {
-  const container = document.getElementById("loading-cache-container");
-  const textIndicator = document.getElementById("loading-cache-text");
-  let total = estanterias.length;
-  let completadas = 0;
 
   for (let est of estanterias) {
+
       try {
-          // Actualiza el texto para que el usuario vea qué estantería se está procesando
-          if (textIndicator) {
-              textIndicator.textContent = `Cargando ${est} (${completadas}/${total})...`;
-          }
 
           const res = await fetch(`${API_URL}?estanteria=${encodeURIComponent(est)}`);
-          const libros = await res.json();
-          
-          libros.forEach(l => {
-              if(l.titulo && !String(l.titulo).includes("Título")) {
-                  librosCache.push({
-                      titulo: String(l.titulo),
-                      autor: String(l.autor || "Anónimo"),
-                      id: String(l.id || "N/A"),
-                      estanteria: est 
-                  });
-              }
-          });
-      } catch(e) {
-          console.warn(`Error cargando caché para estantería ${est}:`, e);
-      }
-      completadas++;
-  }
 
-  // Al finalizar, mostramos éxito y ocultamos el contenedor con animación
-  if (textIndicator && container) {
-      textIndicator.textContent = "¡Buscador listo! Todas las estanterías cargadas.";
-      const spinner = container.querySelector(".spinner-cache");
-      if (spinner) spinner.style.display = "none"; // Quita el círculo giratorio
-      container.style.borderColor = "#2ec4b6"; // Un toque de color verde/azul de éxito opcional
-      
-      // Espera 2 segundos para que el usuario lo vea y luego desaparece suavemente
-      setTimeout(() => {
-          container.style.opacity = "0";
-          container.style.transform = "scale(0.9)";
-          setTimeout(() => {
-              container.style.display = "none";
-          }, 500);
-      }, 2000);
-  }
-}
+          const libros = await res.json();
+
+          libros.forEach(l => {
+
+              if(l.titulo && !String(l.titulo).includes("Título")) {
+
+                  librosCache.push({
+
+                      titulo: String(l.titulo),
+
+                      autor: String(l.autor || "Anónimo"),
+
+                      id: String(l.id || "N/A"),
+
+                      estanteria: est 
+
+                  });
+
+              }
+
+          });
 
       } catch(e) {
 
